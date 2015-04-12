@@ -954,7 +954,7 @@ ol.toc {
 .toc {
   padding: 0;
 }
-li {
+.toc li {
   list-style-type: none;
 }
 .toc-child {
