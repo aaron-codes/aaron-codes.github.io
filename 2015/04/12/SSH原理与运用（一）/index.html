@@ -109,6 +109,7 @@
 <p>简单说，SSH是一种网络协议，用于计算机之间的加密登录。</p>
 </blockquote>
 <p>如果一个用户从本地计算机，使用SSH协议登录另一台远程计算机，我们就可以认为，这种登录是安全的，即使被中途截获，密码也不会泄露。<br>最早的时候，互联网通信都是明文通信，一旦被截获，内容就暴露无疑。1995年，芬兰学者Tatu Ylonen设计了SSH协议，将登录信息全部加密，成为互联网安全的一个基本解决方案，迅速在全世界获得推广，目前已经成为Linux系统的标准配置。<br>需要指出的是，SSH只是一种协议，存在多种实现，既有商业实现，也有开源实现。本文针对的实现是OpenSSH，它是自由软件，应用非常广泛。<br>此外，本文只讨论SSH在Linux Shell中的用法。如果要在Windows系统中使用SSH，会用到另一种软件PuTTY，这需要另文介绍。</p>
+<a id="more"></a>
 <h1 id="二、最基本的用法">二、最基本的用法</h1><p>SSH主要用于远程登录。假定你要以用户名user，登录远程主机host，只要一条简单命令就可以了。</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh user@host</span><br></pre></td></tr></table></figure>
 <p>如果本地用户名与远程用户名一致，登录时可以省略用户名。</p>
@@ -158,7 +159,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://www.cy-56.com/2015/04/12/SSH原理与运用（一）/" data-id="ci8sc6r9300022mhngmtevaxk" class="article-share-link" data-share="baidu">分享到</a>
+        <a data-url="http://www.cy-56.com/2015/04/12/SSH原理与运用（一）/" data-id="ci8scdpyc00023ghnausn0246" class="article-share-link" data-share="baidu">分享到</a>
       
 
       
