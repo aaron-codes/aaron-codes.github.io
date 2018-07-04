@@ -6,25 +6,25 @@
   
   <title>Linux Bash常用命令 | Aaron&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="接触过Linux的童鞋肯定会知道，在Linux操作系统环境下，命令行操作有时候给我们带来极大的帮助，对于命令行“狂热者”们而言，相信Bash命令已经成为他们日常操作不可或缺的一部分。今天给大家介绍一些Bash相关的知识，让初学者认识bash，也希望能让老手更加高效利用bash命令。
-关于Bash、ShellBash是一个为GNU计划编写的Unix shell，也是目前大多数Linux发行版采用的S">
+  <meta name="description" content="接触过Linux的童鞋肯定会知道，在Linux操作系统环境下，命令行操作有时候给我们带来极大的帮助，对于命令行“狂热者”们而言，相信Bash命令已经成为他们日常操作不可或缺的一部分。今天给大家介绍一些Bash相关的知识，让初学者认识bash，也希望能让老手更加高效利用bash命令。 关于Bash、ShellBash是一个为GNU计划编写的Unix shell，也是目前大多数Linux发行版采用的S">
+<meta name="keywords" content="linux,bash,linux命令,bash命令">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux Bash常用命令">
 <meta property="og:url" content="http://www.cy-56.com/2015/04/22/Linux-Bash常用命令/index.html">
-<meta property="og:site_name" content="Aaron's Blog">
-<meta property="og:description" content="接触过Linux的童鞋肯定会知道，在Linux操作系统环境下，命令行操作有时候给我们带来极大的帮助，对于命令行“狂热者”们而言，相信Bash命令已经成为他们日常操作不可或缺的一部分。今天给大家介绍一些Bash相关的知识，让初学者认识bash，也希望能让老手更加高效利用bash命令。
-关于Bash、ShellBash是一个为GNU计划编写的Unix shell，也是目前大多数Linux发行版采用的S">
+<meta property="og:site_name" content="Aaron&#39;s Blog">
+<meta property="og:description" content="接触过Linux的童鞋肯定会知道，在Linux操作系统环境下，命令行操作有时候给我们带来极大的帮助，对于命令行“狂热者”们而言，相信Bash命令已经成为他们日常操作不可或缺的一部分。今天给大家介绍一些Bash相关的知识，让初学者认识bash，也希望能让老手更加高效利用bash命令。 关于Bash、ShellBash是一个为GNU计划编写的Unix shell，也是目前大多数Linux发行版采用的S">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2015-04-22T08:45:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux Bash常用命令">
-<meta name="twitter:description" content="接触过Linux的童鞋肯定会知道，在Linux操作系统环境下，命令行操作有时候给我们带来极大的帮助，对于命令行“狂热者”们而言，相信Bash命令已经成为他们日常操作不可或缺的一部分。今天给大家介绍一些Bash相关的知识，让初学者认识bash，也希望能让老手更加高效利用bash命令。
-关于Bash、ShellBash是一个为GNU计划编写的Unix shell，也是目前大多数Linux发行版采用的S">
+<meta name="twitter:description" content="接触过Linux的童鞋肯定会知道，在Linux操作系统环境下，命令行操作有时候给我们带来极大的帮助，对于命令行“狂热者”们而言，相信Bash命令已经成为他们日常操作不可或缺的一部分。今天给大家介绍一些Bash相关的知识，让初学者认识bash，也希望能让老手更加高效利用bash命令。 关于Bash、ShellBash是一个为GNU计划编写的Unix shell，也是目前大多数Linux发行版采用的S">
   
     <link rel="alternative" href="/atom.xml" title="Aaron&#39;s Blog" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
   <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
   
 </head>
@@ -108,7 +108,7 @@
 <p><code>ls [-adlsht] [PATH]</code>：列出当前[PATH]目录下的非隐藏文件<br><code>-a</code> 显示所有文件<br><code>-d</code> 显示目录本身<br><code>-l</code> 以列表形式显示详细信息<br><code>-s</code> 显示文件大小，单位块<br><code>-h</code> 带度量单位显示<br><code>-t</code> 按最新修改时间显示</p>
 <h2 id="cd切换目录命令">cd切换目录命令</h2><hr>
 <p><code>cd [PATH]</code>：切换到PATH目录<br>..表示上一级目录；.表示当前目录；/表示根目录，也即Linux下的顶级目录；~表示当前用户主目录，例如root用户的~为/root,achao用户的~为/home/achao<br>案例使用如下：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@www home]# pwd&#10;/home&#10;[root@www home]# ls&#10;a.txt  test&#10;[root@www home]# ls -al &#10;total 12&#10;drwxr-xr-x  3 root root 4096 Feb 26 00:51 .&#10;drwxr-xr-x 18 root root 4096 Jan  5 21:46 ..&#10;-rw-r--r--  1 root root    0 Feb 26 00:51 a.txt&#10;drwxr-xr-x  2 root root 4096 Feb 26 00:52 test&#10;[root@www home]# ls -ls ./test/&#10;total 4&#10;4 -rw-r--r-- 1 root root 1 Feb 26 00:52 b.txt&#10;[root@www home]#</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@www home]# pwd</span><br><span class="line">/home</span><br><span class="line">[root@www home]# ls</span><br><span class="line">a.txt  test</span><br><span class="line">[root@www home]# ls -al </span><br><span class="line">total 12</span><br><span class="line">drwxr-xr-x  3 root root 4096 Feb 26 00:51 .</span><br><span class="line">drwxr-xr-x 18 root root 4096 Jan  5 21:46 ..</span><br><span class="line">-rw-r--r--  1 root root    0 Feb 26 00:51 a.txt</span><br><span class="line">drwxr-xr-x  2 root root 4096 Feb 26 00:52 test</span><br><span class="line">[root@www home]# ls -ls ./test/</span><br><span class="line">total 4</span><br><span class="line">4 -rw-r--r-- 1 root root 1 Feb 26 00:52 b.txt</span><br><span class="line">[root@www home]#</span><br></pre></td></tr></table></figure>
 <h2 id="cp复制命令">cp复制命令</h2><hr>
 <p><code>cp FILENAME1 FILENAME2</code>：复制FILENAME1到FILENAME2<br><code>cp -r DIR1 DIR2</code>：复制DIR1目录到DIR2目录<br>cp命令后面跟的参数说明：<br><code>-a</code>：–archive，与同时指定 DIR1 这三个选项效果一样，用于复制整个目录，包括目录中的子目录等都递归的复制，而且还要保持文件的访问模式，所有者，时间戳等属性与原文件一样。<br><code>-f</code>：表示覆盖已经存在的目标文件而不提示<br><code>-i</code>：参数i和f相反，表示在覆盖目标文件之前将给出提示要求用户确认，回答y时目标文件将被覆盖，是交互式拷贝.</p>
 <h2 id="mv移动重命名命令">mv移动重命名命令</h2><hr>
@@ -127,13 +127,13 @@
 <h2 id="Bang_(!)_命令">Bang (!) 命令</h2><hr>
 <p><code>history</code>：查看历史命令<br><code>!n</code>：不再需要复制粘贴，直接运行执行历史上面的命令，只需将n替换为这条命里记录前的序号，比如!453<br><code>!-n</code>：表示执行导入第几个命令<br><code>!!</code>：执行上一条命令<br><code>Ctrl + r</code> ：然后输入关键字，查找带有关键字的历史命令后回车，即可运行这条历史命令</p>
 <hr>
-<p>转载自阿超的博客: <a href="http://www.awolau.com/linux/start-bash.html" target="_blank" rel="external">http://www.awolau.com/linux/start-bash.html</a></p>
+<p>转载自阿超的博客: <a href="http://www.awolau.com/linux/start-bash.html" target="_blank" rel="noopener">http://www.awolau.com/linux/start-bash.html</a></p>
 
       
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://www.cy-56.com/2015/04/22/Linux-Bash常用命令/" data-id="ci8si8x7p000fsmhnir76xv1w" class="article-share-link" data-share="baidu">分享到</a>
+        <a data-url="http://www.cy-56.com/2015/04/22/Linux-Bash常用命令/" data-id="cjj6pvwvw0000oe9snzl5whmx" class="article-share-link" data-share="baidu">分享到</a>
       
 
       
@@ -157,9 +157,9 @@
     </a>
   
   
-    <a href="/2015/04/12/SSH原理与运用（二）/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2015/04/12/SSH原理与运用（一）/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">SSH-远程操作与端口转发（二）</div>
+      <div class="article-nav-title">SSH原理与运用（一）</div>
     </a>
   
 </nav>
@@ -194,7 +194,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/bash/" style="font-size: 10px;">bash</a><a href="/tags/bash命令/" style="font-size: 10px;">bash命令</a><a href="/tags/linux/" style="font-size: 10px;">linux</a><a href="/tags/linux命令/" style="font-size: 10px;">linux命令</a><a href="/tags/ssh/" style="font-size: 20px;">ssh</a><a href="/tags/ssh免密码/" style="font-size: 20px;">ssh免密码</a><a href="/tags/ssh远程登录/" style="font-size: 20px;">ssh远程登录</a><a href="/tags/vpn/" style="font-size: 10px;">vpn</a><a href="/tags/vpngate/" style="font-size: 10px;">vpngate</a><a href="/tags/免费vpn/" style="font-size: 10px;">免费vpn</a>
+      <a href="/tags/bash/" style="font-size: 10px;">bash</a> <a href="/tags/bash命令/" style="font-size: 10px;">bash命令</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/linux命令/" style="font-size: 10px;">linux命令</a> <a href="/tags/ssh/" style="font-size: 20px;">ssh</a> <a href="/tags/ssh免密码/" style="font-size: 20px;">ssh免密码</a> <a href="/tags/ssh远程登录/" style="font-size: 20px;">ssh远程登录</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a> <a href="/tags/vpngate/" style="font-size: 10px;">vpngate</a> <a href="/tags/免费vpn/" style="font-size: 10px;">免费vpn</a>
     </div>
   </div>
 
@@ -223,15 +223,15 @@
           </li>
         
           <li>
-            <a href="/2015/04/12/SSH原理与运用（二）/">SSH-远程操作与端口转发（二）</a>
-          </li>
-        
-          <li>
             <a href="/2015/04/12/SSH原理与运用（一）/">SSH原理与运用（一）</a>
           </li>
         
           <li>
-            <a href="/2015/04/07/hello-world/">Hello World</a>
+            <a href="/2015/04/12/SSH原理与运用（二）/">SSH-远程操作与端口转发（二）</a>
+          </li>
+        
+          <li>
+            <a href="/2015/04/03/hello-world/">Hello World</a>
           </li>
         
       </ul>
@@ -265,7 +265,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2015 Aaron OuYang<br>
+      &copy; 2018 Aaron OuYang<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
       .
       Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
@@ -306,12 +306,12 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
 
-<script src="/js/script.js" type="text/javascript"></script>
+<script src="/js/script.js"></script>
 
 </div>
 </body>
