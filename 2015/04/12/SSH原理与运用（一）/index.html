@@ -10,7 +10,7 @@
 <meta name="keywords" content="ssh,ssh远程登录,ssh免密码">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SSH原理与运用（一）">
-<meta property="og:url" content="http://www.cy-56.com/2015/04/12/SSH原理与运用（一）/index.html">
+<meta property="og:url" content="http://aaron-codes.github.io/2015/04/12/SSH原理与运用（一）/index.html">
 <meta property="og:site_name" content="Aaron&#39;s Blog">
 <meta property="og:description" content="什么是SSH? 简单说，SSH是一种网络协议，用于计算机之间的加密登录。  如果一个用户从本地计算机，使用SSH协议登录另一台远程计算机，我们就可以认为，这种登录是安全的，即使被中途截获，密码也不会泄露。最早的时候，互联网通信都是明文通信，一旦被截获，内容就暴露无疑。1995年，芬兰学者Tatu Ylonen设计了SSH协议，将登录信息全部加密，成为互联网安全的一个基本解决方案，迅速在全世界获得推">
 <meta property="og:locale" content="zh-CN">
@@ -62,7 +62,7 @@
           <input name=tn type=hidden value="bds">
           <input name=cl type=hidden value="3">
           <input name=ct type=hidden value="2097152">
-          <input type="hidden" name="si" value="www.cy-56.com">
+          <input type="hidden" name="si" value="aaron-codes.github.io">
         </form>
       </div>
     </div>
@@ -104,11 +104,11 @@
 </blockquote>
 <p>如果一个用户从本地计算机，使用SSH协议登录另一台远程计算机，我们就可以认为，这种登录是安全的，即使被中途截获，密码也不会泄露。<br>最早的时候，互联网通信都是明文通信，一旦被截获，内容就暴露无疑。1995年，芬兰学者Tatu Ylonen设计了SSH协议，将登录信息全部加密，成为互联网安全的一个基本解决方案，迅速在全世界获得推广，目前已经成为Linux系统的标准配置。<br>需要指出的是，SSH只是一种协议，存在多种实现，既有商业实现，也有开源实现。本文针对的实现是OpenSSH，它是自由软件，应用非常广泛。<br>此外，本文只讨论SSH在Linux Shell中的用法。如果要在Windows系统中使用SSH，会用到另一种软件PuTTY，这需要另文介绍。<br><a id="more"></a></p>
 <h1 id="最基本的用法">最基本的用法</h1><p>SSH主要用于远程登录。假定你要以用户名user，登录远程主机host，只要一条简单命令就可以了。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ssh user@host</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ssh user@host</span><br></pre></td></tr></table></figure>
 <p>如果本地用户名与远程用户名一致，登录时可以省略用户名。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ssh host</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ssh host</span><br></pre></td></tr></table></figure>
 <p>SSH的默认端口是22，也就是说，你的登录请求会送进远程主机的22端口。使用p参数，可以修改这个端口。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ssh -p 2222 user@host</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ssh -p 2222 user@host</span><br></pre></td></tr></table></figure>
 <p>上面这条命令表示，ssh直接连接远程主机的2222端口。</p>
 <h1 id="中间人攻击">中间人攻击</h1><p>SSH之所以能够保证安全，原因在于它采用了公钥加密。<br>整个过程是这样的：</p>
 <ol>
@@ -118,7 +118,7 @@
 </ol>
 <p>这个过程本身是安全的，但是实施的时候存在一个风险：如果有人截获了登录请求，然后冒充远程主机，将伪造的公钥发给用户，那么用户很难辨别真伪。因为不像https协议，SSH协议的公钥是没有证书中心（CA）公证的，也就是说，都是自己签发的。<br>  可以设想，如果攻击者插在用户与远程主机之间（比如在公共的wifi区域），用伪造的公钥，获取用户的登录密码。再用这个密码登录远程主机，那么SSH的安全机制就荡然无存了。这种风险就是著名的”中间人攻击”（Man-in-the-middle attack）。<br>SSH协议是如何应对的呢？</p>
 <h1 id="口令登录">口令登录</h1><p>如果你是第一次登录对方主机，系统会出现下面的提示：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ssh user@host</span></span><br><span class="line">The authenticity of host 'host (12.18.429.21)' can't be established.</span><br><span class="line">RSA key fingerprint is 98:2e:d7:e0:de:9f:ac:67:28:c2:42:2d:37:16:58:4d.</span><br><span class="line">Are you sure you want to continue connecting (yes/no)?</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ssh user@host</span><br><span class="line">The authenticity of host 'host (12.18.429.21)' can't be established.</span><br><span class="line">RSA key fingerprint is 98:2e:d7:e0:de:9f:ac:67:28:c2:42:2d:37:16:58:4d.</span><br><span class="line">Are you sure you want to continue connecting (yes/no)?</span><br></pre></td></tr></table></figure>
 <p>这段话的意思是，无法确认host主机的真实性，只知道它的公钥指纹，问你还想继续连接吗？<br>所谓”公钥指纹”，是指公钥长度较长（这里采用RSA算法，长达1024位），很难比对，所以对其进行MD5计算，将它变成一个128位的指纹。上例中是98:2e:d7:e0:de:9f:ac:67:28:c2:42:2d:37:16:58:4d，再进行比较，就容易多了。<br>很自然的一个问题就是，用户怎么知道远程主机的公钥指纹应该是多少？回答是没有好办法，远程主机必须在自己的网站上贴出公钥指纹，以便用户自行核对。<br>假定经过风险衡量以后，用户决定接受这个远程主机的公钥。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Are you sure you want to continue connecting (yes/no)? yes</span><br></pre></td></tr></table></figure>
 <p>系统会出现一句提示，表示host主机已经得到认可。</p>
@@ -127,16 +127,16 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Password: (enter password)</span><br></pre></td></tr></table></figure>
 <p>如果密码正确，就可以登录了。<br>当远程主机的公钥被接受以后，它就会被保存在文件$HOME/.ssh/known_hosts之中。下次再连接这台主机，系统就会认出它的公钥已经保存在本地了，从而跳过警告部分，直接提示输入密码。<br>每个SSH用户都有自己的known_hosts文件，此外系统也有一个这样的文件，通常是/etc/ssh/ssh_known_hosts，保存一些对所有用户都可信赖的远程主机的公钥</p>
 <h1 id="公钥登录">公钥登录</h1><p>使用密码登录，每次都必须输入密码，非常麻烦。好在SSH还提供了公钥登录，可以省去输入密码的步骤。<br>所谓”公钥登录”，原理很简单，就是用户将自己的公钥储存在远程主机上。登录的时候，远程主机会向用户发送一段随机字符串，用户用自己的私钥加密后，再发回来。远程主机用事先储存的公钥进行解密，如果成功，就证明用户是可信的，直接允许登录shell，不再要求密码。<br>这种方法要求用户必须提供自己的公钥。如果没有现成的，可以直接用ssh-keygen生成一个：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ssh-keygen</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ssh-keygen</span><br></pre></td></tr></table></figure>
 <p>运行上面的命令以后，系统会出现一系列提示，可以一路回车。其中有一个问题是，要不要对私钥设置口令（passphrase），如果担心私钥的安全，这里可以设置一个。<br>运行结束以后，在$HOME/.ssh/目录下，会新生成两个文件：id_rsa.pub和id_rsa。前者是你的公钥，后者是你的私钥。<br>这时再输入下面的命令，将公钥传送到远程主机host上面：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ssh-copy-id user@host</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ssh-copy-id user@host</span><br></pre></td></tr></table></figure>
 <p>好了，从此你再登录，就不需要输入密码了。<br>如果还是不行，就打开远程主机的/etc/ssh/sshd_config这个文件，检查下面几行前面”#”注释是否取掉。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RSAAuthentication yes</span><br><span class="line">PubkeyAuthentication yes</span><br><span class="line">AuthorizedKeysFile .ssh/authorized_keys</span><br></pre></td></tr></table></figure>
 <p>然后，重启远程主机的ssh服务。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// ubuntu系统</span><br><span class="line">service ssh restart</span><br><span class="line">// debian系统</span><br><span class="line">/etc/init.d/ssh restart</span><br></pre></td></tr></table></figure>
 <h1 id="关于authorized_keys文件">关于authorized_keys文件</h1><p>远程主机将用户的公钥，保存在登录后的用户主目录的$HOME/.ssh/authorized_keys文件中。公钥就是一段字符串，只要把它追加在authorized_keys文件的末尾就行了。</p>
 <p>这里不使用上面的ssh-copy-id命令，改用下面的命令，解释公钥的保存过程：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ssh user@host <span class="string">'mkdir -p .ssh &amp;&amp; cat &gt;&gt; .ssh/authorized_keys'</span> &lt; ~/.ssh/id_rsa.pub</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ssh user@host 'mkdir -p .ssh &amp;&amp; cat &gt;&gt; .ssh/authorized_keys' &lt; ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
 <p>这条命令由多个语句组成，依次分解开来看：</p>
 <hr>
 <ol>
@@ -152,7 +152,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://www.cy-56.com/2015/04/12/SSH原理与运用（一）/" data-id="cjj7ccc39000ar49svezclqge" class="article-share-link" data-share="baidu">分享到</a>
+        <a data-url="http://aaron-codes.github.io/2015/04/12/SSH原理与运用（一）/" data-id="cjj7cep3j0005x39s8cr46q8y" class="article-share-link" data-share="baidu">分享到</a>
       
 
       
@@ -166,19 +166,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/04/12/SSH原理与运用（二）/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2015/04/22/Linux-Bash常用命令/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
       <div class="article-nav-title">
         
-          SSH-远程操作与端口转发（二）
+          Linux Bash常用命令
         
       </div>
     </a>
   
   
-    <a href="/2015/04/03/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2015/04/12/SSH原理与运用（二）/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">Hello World</div>
+      <div class="article-nav-title">SSH-远程操作与端口转发（二）</div>
     </a>
   
 </nav>
@@ -250,7 +250,7 @@
           </li>
         
           <li>
-            <a href="/2015/04/12/SSH原理与运用（二）/">SSH-远程操作与端口转发（二）</a>
+            <a href="/2015/04/12/SSH原理与运用（一）/">SSH原理与运用（一）</a>
           </li>
         
       </ul>
