@@ -14,7 +14,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-CN">
+<html class="theme-next gemini use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -72,7 +72,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Gemini',
     version: '6.7.0',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: false,
@@ -103,7 +103,7 @@
 <meta property="og:url" content="http://aaron-codes.github.io/2015/04/22/Linux-Bash常用命令/index.html">
 <meta property="og:site_name" content="Aaron&#39;s Blog">
 <meta property="og:description" content="接触过Linux的童鞋肯定会知道，在Linux操作系统环境下，命令行操作有时候给我们带来极大的帮助，对于命令行“狂热者”们而言，相信Bash命令已经成为他们日常操作不可或缺的一部分。今天给大家介绍一些Bash相关的知识，让初学者认识bash，也希望能让老手更加高效利用bash命令。 关于Bash、ShellBash是一个为GNU计划编写的Unix shell，也是目前大多数Linux发行版采用的S">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2015-04-22T08:45:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux Bash常用命令">
@@ -165,7 +165,7 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -196,7 +196,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="切换导航栏">
+    <button aria-label="Toggle navigation bar">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -224,7 +224,7 @@
 
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>首页</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>Home</a>
 
   </li>
         
@@ -241,7 +241,7 @@
 
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>归档</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>Archives</a>
 
   </li>
 
@@ -249,9 +249,6 @@
       
     </ul>
   
-
-  
-    
 
   
 
@@ -273,6 +270,9 @@
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
+          
+            
+
           
           <div id="content" class="content">
             
@@ -329,14 +329,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="创建时间：2015-04-22 16:09:10 / 修改时间：16:45:22" itemprop="dateCreated datePublished" datetime="2015-04-22T16:09:10+08:00">2015-04-22</time>
+              <time title="Created: 2015-04-22 16:09:10 / Modified: 16:45:22" itemprop="dateCreated datePublished" datetime="2015-04-22T16:09:10+08:00">2015-04-22</time>
             
 
             
@@ -355,7 +355,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">分类于</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
@@ -464,8 +464,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/04/12/SSH原理与运用（二）/" rel="next" title="SSH-远程操作与端口转发（二）">
-                <i class="fa fa-chevron-left"></i> SSH-远程操作与端口转发（二）
+              <a href="/2015/04/12/SSH原理与运用（一）/" rel="next" title="SSH原理与运用（一）">
+                <i class="fa fa-chevron-left"></i> SSH原理与运用（一）
               </a>
             
           </div>
@@ -523,10 +523,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
+            Overview
           </li>
         </ul>
       
@@ -547,7 +547,7 @@
                   <a href="/archives/">
                 
                     <span class="site-state-item-count">11</span>
-                    <span class="site-state-item-name">日志</span>
+                    <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
               
@@ -572,7 +572,7 @@
                       
                     
                     <span class="site-state-item-count">6</span>
-                    <span class="site-state-item-name">分类</span>
+                    <span class="site-state-item-name">categories</span>
                   
                 </div>
               
@@ -623,7 +623,7 @@
                       
                     
                     <span class="site-state-item-count">19</span>
-                    <span class="site-state-item-name">标签</span>
+                    <span class="site-state-item-name">tags</span>
                   
                 </div>
               
@@ -690,7 +690,7 @@
 </div>
 
 
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.7.1</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.7.1</div>
 
 
 
@@ -698,7 +698,7 @@
 
 
 
-  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.7.0</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v6.7.0</div>
 
 
 
@@ -786,7 +786,10 @@
   
 
 
-  <script src="/js/src/schemes/muse.js?v=6.7.0"></script>
+  <script src="/js/src/affix.js?v=6.7.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.7.0"></script>
+
 
 
 
