@@ -697,6 +697,361 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://aaron-codes.github.io/2018/07/06/2019-02-20/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Aaron OuYang"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/3776267"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Aaron's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/07/06/2019-02-20/" class="post-title-link" itemprop="url">微服务 2.0 技术栈选型手册</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-07-06 14:09:10" itemprop="dateCreated datePublished" datetime="2018-07-06T14:09:10+08:00">2018-07-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-20 14:52:43" itemprop="dateModified" datetime="2019-02-20T14:52:43+08:00">2019-02-20</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/architecture/" itemprop="url" rel="index"><span itemprop="name">architecture</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>[toc]</p>
+<h1 id="(转)微服务_2-0_技术栈选型手册">(转)微服务 2.0 技术栈选型手册</h1><blockquote>
+<p>原文引自：<a href="https://mp.weixin.qq.com/s/OloZhn2pwfIrOQit_8jefA" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/OloZhn2pwfIrOQit_8jefA</a></p>
+</blockquote>
+<h3 id="一、前言">一、前言</h3><p>2014年可以认为是微服务1.0的元年，当年有几个标志性事件，一是Martin Fowler在其博客上发表了“Microservices”一文，正式提出微服务架构风格；二是Netflix微服务架构经过多年大规模生产验证，最终抽象落地形成一整套开源的微服务基础组件，统称NetflixOSS，Netflix的成功经验开始被业界认可并推崇；三是Pivotal将NetflixOSS开源微服务组件集成到其Spring体系，推出Spring Cloud微服务开发技术栈。</p>
+<p>一晃三年过去，微服务技术生态又发生了巨大变化，容器，PaaS，Cloud Native，gRPC，ServiceMesh，Serverless等新技术新理念你方唱罢我登场，不知不觉我们又来到了微服务2.0时代。基于近年在微服务基础架构方面的实战经验和平时的学习积累，我想总结并提出一些构建微服务2.0技术栈的选型思路，供各位在一线实战的架构师、工程师参考借鉴。对于一些暂时还没有成熟开源产品的微服务支撑模块，我也会给出一些定制自研的设计思路。</p>
+<h3 id="二、选型准侧">二、选型准侧</h3><p>对于技术选型，我个人有很多标准，其中下面三项是最重要的:</p>
+<h4 id="1-_生产级">1. 生产级</h4><p>我们选择的技术栈是要解决实际业务问题和上生产抗流量的（选择不慎可能造成生产级事故），而不是简单做个POC或者Demo展示，所以生产级（Production Ready），可运维（Ops Ready），可治理，成熟稳定的技术才是我们的首选；</p>
+<h4 id="2-_一线互联网公司落地产品">2. 一线互联网公司落地产品</h4><p>我们会尽量采用在一线互联网公司落地并且开源的，且在社区内形成良好口碑的产品，它们已经在这些公司经过流量冲击，坑已经基本被填平，且被社区接受形成一个良好的社区生态（本文附录部分会给出所有推荐使用或参考的开源项目的github链接。）。</p>
+<h4 id="3-_开源社区活跃度">3. 开源社区活跃度</h4><p>Github上的stars的数量是一个重要指标，同时会参考其代码和文档更新频率（尤其是近年），这些指标直接反应开源产品的社区活跃度或者说生命力。</p>
+<p>另外，对于不同业务体量和团队规模的公司，技术选型标准往往是不同的，创业公司的技术选型和BAT级别公司的技术选型标准可能完全不同。本文主要针对日流量千万以上，研发团队规模不少于50人的公司，如果小于这个规模我建议认真评估是否真的需要采用微服务架构。考虑到Java语言在国内的流行度和我个人的背景经验，本文主要针对采用Java技术栈的企业。本文也假定自建微服务基础架构，有些产品其实有对应的云服务可以直接使用，自建和采用云服务各有利弊，架构师需要根据场景上下文综合权衡。</p>
+<h3 id="三、微服务基础架构核心关注点">三、微服务基础架构核心关注点</h3><p>下面脑图中芒果色标注的七个模块，我认为是构建微服务2.0技术栈的核心模块，本文后面的选型会分别基于这些模块展开。对于每个模块我也列出一些核心架构关注点，在选择具体产品时，需要尽可能覆盖到这些关注点。</p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/ELH62gpbFmGnhN6hOuucZerjsiaAOibFPvEpicPXMexqoSyELVn7uKSrj525ia32TuBIjPQDl3SkOtx4VibeLupODzw/?wx_fmt=png" alt=""></p>
+<p>下图是在参考过华为技术专家王磊的《微服务的设计与生态系统》[附录12.46]的基础上，结合作者自身的实践调整而来，我想同时分享给一线架构师或者工程师参考，其中粉红色标注的模块是和微服务关系最密切的模块，大家在做技术选型时，可以同时对照这个体系。</p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/ELH62gpbFmGnhN6hOuucZerjsiaAOibFPvibW6tCyibC6icDoubr6x80nz8KwpPibV55BqCQwibTQpF1hoIs2GPNVrN2A/?wx_fmt=png" alt=""></p>
+<h3 id="四、服务框架选型">四、服务框架选型</h3><p>服务框架是一个比较成熟的领域，有太多可选项。<strong>Spring Boot Cloud</strong>[附录12.1]由于Spring社区的影响力和Netflix的背书，目前可以认为是构建Java微服务的一个社区标准，Spring Boot目前在github上有超过20k星。基于Spring的框架本质上可以认为是一种RESTful框架（不是RPC框架），序列化协议主要采用基于文本的JSON，通讯协议一般基于HTTP。RESTful框架天然支持跨语言，任何语言只要有HTTP客户端都可以接入调用，但是客户端一般需要自己解析payload。目前Spring框架也支持Swagger契约编程模型，能够基于契约生成各种语言的强类型客户端，极大方便不同语言栈的应用接入，但是因为RESTful框架和Swagger规范的弱契约特性，生成的各种语言客户端的互操作性还是有不少坑的。</p>
+<p><strong>Dubbo</strong>[附录12.2]是阿里多年构建生产级分布式微服务的技术结晶，服务治理能力非常丰富，在国内技术社区具有很大影响力，目前github上有超过16k星。Dubbo本质上是一套基于Java的RPC框架，当当Dubbox扩展了Dubbo支持RESTful接口暴露能力。Dubbo主要面向Java 技术栈，跨语言支持不足是它的一个弱项，另外因为治理能力太丰富，以至于这个框架比较重，完全用好这个框架的门槛比较高，但是如果你的企业基本上投资在Java技术栈上，选Dubbo可以让你在服务框架一块站在较高的起点上，不管是性能还是企业级的服务治理能力，Dubbo都做的很出色。新浪微博开源的Motan（github 4k stars）也不错，功能和Dubbo类似，可以认为是一个轻量裁剪版的Dubbo。</p>
+<p><strong>gRPC</strong>[附录12.3]是谷歌近年新推的一套RPC框架，基于protobuf的强契约编程模型，能自动生成各种语言客户端，且保证互操作。支持HTTP2是gRPC的一大亮点，通讯层性能比HTTP有很大改进。Protobuf是在社区具有悠久历史和良好口碑的高性能序列化协议，加上Google公司的背书和社区影响力，目前gRPC也比较火，github上有超过13.4k星。目前看gRPC更适合内部服务相互调用场景，对外暴露HTTP RESTful接口可以实现，但是比较麻烦（需要gRPC Gateway配合），所以对于对外暴露API场景可能还需要引入第二套HTTP RESTful框架作为补充。总体上gRPC这个东西还比较新，社区对于HTTP2带来的好处还未形成一致认同，建议谨慎投入，可以做一些试点。</p>
+<h3 id="五、运行时支撑服务选型">五、运行时支撑服务选型</h3><p>运行时支撑服务主要包括服务注册中心，服务路由网关和集中式配置中心三个产品。</p>
+<p><strong>服务注册中心</strong>，如果采用Spring Cloud体系，则选择<strong>Eureka</strong>[附录12.4]是最佳搭配，Eureka在Netflix经过大规模生产验证，支持跨数据中心，客户端配合Ribbon可以实现灵活的客户端软负载，Eureka目前在github上有超过4.7k星；<strong>Consul</strong>[附录12.5]也是不错选择，天然支持跨数据中心，还支持KV模型存储和灵活健康检查能力，目前在github上有超过11k星。</p>
+<p><strong>服务网关</strong>也是一个比较成熟的领域，有很多可选项。如果采用Spring Cloud体系，则选择<strong>Zuul</strong>[附录12.6]是最佳搭配，Zuul在Netflix经过大规模生产验证，支持灵活的动态过滤器脚本机制，异步性能不足（基于Netty的异步Zuul迟迟未能推出正式版）。Zuul网关目前在github上有超过3.7k星。基于Nginx/OpenResty的API网关<strong>Kong</strong>[附录12.7]目前在github上比较火，有超过14.1k星。因为采用Nginx内核，Kong的异步性能较强，另外基于lua的插件机制比较灵活，社区插件也比较丰富，从安全到限流熔断都有，还有不少开源的管理界面，能够集中管理Kong集群。</p>
+<p><strong>配置中心</strong>，Spring Cloud自带<strong>Spring Cloud Config</strong>[附录12.8]（github 0.75k stars），个人认为算不上生产级，很多治理能力缺失，小规模场景可以试用。个人比较推荐携程的<strong>Apollo</strong>[附录12.9]配置中心，在携程经过生产级验证，具备高可用，配置实时生效（推拉结合），配置审计和版本化，多环境多集群支持等生产级特性，建议中大规模需要对配置集中进行治理的企业采用。Apollo目前在github上有超过3.4k星。</p>
+<h3 id="六、服务监控选型">六、服务监控选型</h3><p>主要包括日志监控，调用链监控，Metrics监控，健康检查和告警通知等产品。</p>
+<p><strong>ELK</strong>目前可以认为是日志监控的标配，功能完善开箱即用，<strong>Elasticsearch</strong>[附录12.10]目前在github上有超过28.4k星。<strong>Elastalert</strong>[附录12.11] (github 4k stars)是Yelp开源的针对ELK的告警通知模块。</p>
+<p>调用链监控目前社区主流是点评<strong>CAT</strong>[附录12.12]（github 4.3k stars），Twitter之前开源现在由OpenZipkin社区维护的<strong>Zipkin</strong>[附录12.13]（github 7.5k stars）和Naver开源的<strong>Pinpoint</strong>[附录12.14]（github 5.3k stars）。个人比较推荐点评开源的CAT，在点评和国内多家互联网公司有落地案例，生产级特性和治理能力较完善，另外CAT自带告警模块。下面是我之前对三款产品的评估表，供参考。</p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/ELH62gpbFmGnhN6hOuucZerjsiaAOibFPvxllXmicttdXNndMicj4CuE6tmHxqQjzdt9ljn3icUVRTW0kVHzAtOsuZw/640?wx_fmt=png" alt=""></p>
+<p>Metrics监控主要依赖于时间序列数据库(TSDB)，目前较成熟的产品是StumbleUpon公司开源的基于HBase的<strong>OpenTSDB</strong>[附录12.15]（基于Cassandra的<strong>KariosDB</strong>[附录12.16]也是一个选择，github 1.1k stars，它基本上是OpenTSDB针对Cassandra的一个改造版），OpenTSDB具有分布式能力可以横向扩展，但是相对较重，适用于中大规模企业，OpenTSDB目前在github上有近2.9k星。OpenTSDB 本身不提供告警模块，<strong>Argus</strong>[附录12.17]（github 0.29k星）是Salesforce开源的基于OpenTSDB的统一监控告警平台，支持丰富的告警函数和灵活的告警配置，可以作为OpenTSDB的告警补充。近年也出现一些轻量级的TSDB，如<strong>InfluxDB</strong>[附录12.18]（github 12.4k stars）和<strong>Prometheus</strong>[附录12.19]（github 14.3k stars），这些产品函数报表能力丰富，自带告警模块，但是分布式能力不足，适用于中小规模企业。<strong>Grafana</strong>[附录12.20]（github 19.9k stars）是Metrics报表展示的社区标配。</p>
+<p>社区还有一些通用的健康检查和告警产品，例如<strong>Sensu</strong>[附录12.21]（github 2.7k stars），能够对各种服务（例如spring boot暴露的健康检查端点，时间序列数据库中的metrics，ELK中的错误日志等）定制灵活的健康检查(check)，然后用户可以针对check结果设置灵活的告警通知策略。Sensu在Yelp等公司有落地案例。其它类似产品还有Esty开源的<strong>411</strong>[附录12.22]（github 0.74k星）和Zalando的<strong>ZMon</strong>[附录12.23] (github 0.15k星)，它们是分别在Esty和Zalando落地的产品，但是定制check和告警配置的使用门槛比较高，社区不热，建议有定制自研能力的团队试用。ZMon后台采用KairosDB存储，如果企业已经采用KariosDB作为时间序列数据库，则可以考虑ZMon作为告警通知模块。</p>
+<h3 id="七、服务容错选型">七、服务容错选型</h3><p>针对Java技术栈，Netflix的<strong>Hystrix</strong>[附录12.24]（github 12.4k stars）把熔断、隔离、限流和降级等能力封装成组件，任何依赖调用（数据库，服务，缓存）都可以封装在Hystrix Command之内，封装后自动具备容错能力。Hystrix起源于Netflix的弹性工程项目，经过Netflix大规模生产验证，目前是容错组件的社区标准，github上有超12k星。其它语言栈也有类似Hystrix的简化版本组件。</p>
+<p>Hystrix一般需要在应用端或者框架内埋点，有一定的使用门槛。对于采用集中式反向代理（边界和内部）做服务路由的公司，则可以集中在反向代理上做熔断限流，例如采用<strong>nginx</strong>[附录12.25]（github 5.1k stars）或者<strong>Kong</strong>[附录12.7]（github 11.4k stars）这类反向代理，它们都有插件支持灵活的限流容错配置。Zuul网关也可以集成Hystrix实现网关层集中式限流容错。集中式反向代理需要有一定的研发和运维能力，但是可以对限流容错进行集中治理，可以简化客户端。</p>
+<h3 id="八、后台服务选型">八、后台服务选型</h3><p>后台服务主要包括消息系统，分布式缓存，分布式数据访问层和任务调度系统。后台服务是一个相对比较成熟的领域，很多开源产品基本可以开箱即用。</p>
+<p><strong>消息系统</strong>，对于日志等可靠性要求不高的场景，则Apache顶级项目<strong>Kafka</strong>[附录12.26]（github 7.2k stars）是社区标配。对于可靠性要求较高的业务场景，kafka其实也是可以胜任，但企业需要根据具体场景，对 Kafka的监控和治理能力进行适当定制完善，Allegro公司开源的<strong>hermes</strong>[附录12.27]（github 0.3k stars）是一个可参考项目，它在Kafka基础上封装了适合业务场景的企业级治理能力。阿里开源的<strong>RocketMQ</strong>[附录12.28]（github 3.5k星）也是一个不错选择，具备更多适用于业务场景的特性，目前也是Apache顶级项目。<strong>RabbitMQ</strong>[附录12.29]（github 3.6k星）是老牌经典的MQ，队列特性和文档都很丰富，性能和分布式能力稍弱，中小规模场景可选。</p>
+<p>对于<strong>缓存治理</strong>，如果倾向于采用客户端直连模式（个人认为缓存直连更简单轻量），则SohuTv开源的<strong>cachecloud</strong>[附录12.30]（github 2.5k stars）是一款不错的Redis缓存治理平台，提供诸如监控统计，一键开启，自动故障转移，在线伸缩，自动化运维等生产级治理能力，另外其文档也比较丰富。如果倾向采用中间层Proxy模式，则Twitter开源的<strong>twemproxy</strong>[附录12.31]（github 7.5k stars）和CodisLab开源的<strong>codis</strong>[附录12.32]（github 6.9k stars）是社区比较热的选项。</p>
+<p>对于<strong>分布式数据访问层</strong>，如果采用Java技术栈，则当当开源的<strong>shardingjdbc</strong>[附录12.33]（github 3.5k stars）是一个不错的选项，分库分表逻辑做在客户端jdbc driver中，客户端直连数据库比较简单轻量，建议中小规模场景采用。如果倾向采用数据库访问中间层proxy模式，则从阿里Cobar演化出来的社区开源分库分表中间件<strong>MyCAT</strong>[附录12.34]（github 3.6k stars）是一个不错选择 。proxy模式运维成本较高，建议中大规模场景，有一定框架自研和运维能力的团队采用。</p>
+<p><strong>任务调度系统</strong>，个人推荐徐雪里开源的<strong>xxl-job</strong>[附录12.35]（github 3.4k stars），部署简单轻量，大部分场景够用。当当开源的<strong>elastic-job</strong>[附录12.36]（github 3.2k stars）也是一个不错选择，相比xxl-job功能更强一些也更复杂。</p>
+<h3 id="九、服务安全选型">九、服务安全选型</h3><p>对于微服务安全认证授权机制一块，目前业界虽然有OAuth和OpenID connect等标准协议，但是各家具体实现的做法都不太一样，企业一般有很多特殊的定制需求，整个社区还没有形成通用生产级开箱即用的产品。有一些开源授权服务器产品，比较知名的如<strong>Apereo CAS</strong>[附录12.37]（github 3.6k stars），JBoss开源的<strong>keycloak</strong>[附录12.38]（github 1.9 stars），<strong>spring cloud security</strong>[附录12.39]等，大都是opinionated（一家观点和做法）的产品，同时因支持太多协议造成产品复杂，也缺乏足够灵活性。个人建议基于OAuth和OpenID connect标准，在参考一些开源产品的基础上（例如Mitre开源的<strong>OpenID-Connect-Java-Spring-Server</strong>[附录12.40]，github 0.62k stars），定制自研轻量级授权服务器。Wso2提出了一种微服务安全的参考方案[附录12.45]，建议参考，该方案的关键步骤如下：</p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/ELH62gpbFmGnhN6hOuucZerjsiaAOibFPvVsJSIiaxTAbQVwXvFF8AlPBdpc5YRV1neVj1JxpN37Su6wVoP8FNDnw/640?wx_fmt=png" alt=""></p>
+<ol>
+<li><p>使用支持OAuth 2.0和OpenID Connect标准协议的授权服务器（个人建议定制自研）；</p>
+</li>
+<li><p>使用API网关作为单一访问入口，统一实现安全治理；</p>
+</li>
+<li><p>客户在访问微服务之前，先通过授权服务器登录获取access token，然后将access token和请求一起发送到网关；</p>
+</li>
+<li><p>网关获取access token，通过授权服务器校验token，同时做token转换获取JWT token。</p>
+</li>
+<li><p>网关将JWT Token和请求一起转发到后台微服务；</p>
+</li>
+<li><p>JWT中可以存储用户会话信息，该信息可以传递给后台的微服务，也可以在微服务之间传递，用作认证授权等用途；</p>
+</li>
+<li><p>每个微服务包含JWT客户端，能够解密JWT并获取其中的用户会话信息。</p>
+</li>
+<li><p>整个方案中，access token是一种by reference token，不包含用户信息可以直接暴露在公网上；JWT token是一种by value token，可以包含用户信息但不暴露在公网上。</p>
+</li>
+</ol>
+<h3 id="十、服务部署平台选型">十、服务部署平台选型</h3><p>容器已经被社区接受为交付微服务的一种理想手段，可以实现不可变（immutable）发布模式。一个轻量级的基于容器的服务部署平台主要包括容器资源调度，发布系统，镜像治理，资源治理和IAM等模块。</p>
+<p><strong>集群资源调度系统</strong>：屏蔽容器细节，将整个集群抽象成容器资源池，支持按需申请和释放容器资源，物理机发生故障时能够实现自动故障迁移(fail over)。目前Google开源的<strong>kubernetes</strong>[附录12.41]，在Google背书和社区的强力推动下，基本已经形成市场领导者地位，github上有31.8k星，社区的活跃度已经远远超过了<strong>mesos</strong>[附录12.42]（github 3.5k stars）和swarm等竞争产品，所以容器资源调度建议首选k8s。当然如果你的团队有足够定制自研能力，想深度把控底层调度算法，也可以基于mesos做定制自研。</p>
+<p><strong>镜像治理</strong>：基于docker registry，封装一些轻量级的治理功能。vmware开源的harbor[附录12.43] (github 3.5k stars)是目前社区比较成熟的企业级产品，在docker registry基础上扩展了权限控制，审计，镜像同步，管理界面等治理能力，可以考虑采用。</p>
+<p><strong>资源治理</strong>：类似于CMDB思路，在容器云环境中，企业仍然需要对应用app，组织org，容器配额和数量等相关信息进行轻量级的治理。目前这块还没有生产级的开源产品，一般企业需要根据自己的场景定制自研。</p>
+<p><strong>发布平台</strong>：面向用户的发布管理控制台，支持发布流程编排。它和其它子系统对接交互，实现基本的应用发布能力，也实现如蓝绿，金丝雀和灰度等高级发布机制。目前这块生产级的开源产品很少，Netflix开源的<strong>spinnaker</strong>[附录12.44]（github 4.2k stars）是一个，但是这个产品比较复杂重量（因为它既要支持适配对接各种CI系统，同时还要适配对接各种公有云和容器云，使得整个系统异常复杂），一般企业建议根据自己的场景定制自研轻量级的解决方案。</p>
+<p><strong>IAM</strong>：是identity &amp; access management的简称，对发布平台各个组件进行身份认证和安全访问控制。社区有不少开源的IAM产品，比较知名的有<strong>Apereo CAS</strong>（github 3.6k stars），JBoss开源的<strong>keycloak（github 1.9 stars）</strong>等。但是这些产品一般都比较复杂重量，很多企业考虑到内部各种系统灵活对接的需求，都会考虑定制自研轻量级的解决方案。</p>
+<p>考虑到服务部署平台目前还没有端到端生产级解决方案，企业一般需要定制集成，下面给出一个可以参考的具备轻量级治理能努力的发布体系：</p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/ELH62gpbFmGnhN6hOuucZerjsiaAOibFPvBqicIBGC5t6eVS4e64P0oDgUWPrRsrywxZoE744gBdMb4F0icIJDRbcg/640?wx_fmt=png" alt=""></p>
+<p>简化发布流程如下：</p>
+<ol>
+<li><p>应用通过CI集成后生成镜像，用户将镜像推到镜像治理中心；</p>
+</li>
+<li><p>用户在资产治理中心申请发布，填报应用，发布和配额相关信息，然后等待审批通过；</p>
+</li>
+<li><p>发布审批通过，开发人员通过发布控制台发布应用；</p>
+</li>
+<li><p>发布系统通过查询资产治理中心获取发布规格信息；</p>
+</li>
+<li><p>发布系统向容器云发出启动容器实例指令；</p>
+</li>
+<li><p>容器云从镜像治理中心拉取镜像并启动容器；</p>
+</li>
+<li><p>容器内服务启动后自注册到服务注册中心，并保持定期心跳；</p>
+</li>
+<li><p>用户通过发布系统调用服务注册中心调拨流量，实现蓝绿，金丝雀或灰度发布等机制；</p>
+</li>
+<li><p>网关和内部微服务客户端定期同步服务注册中心上的服务路由表，将流量按负载均衡策略分发到新的服务实例上。</p>
+</li>
+</ol>
+<p>另外，持续交付流水线（CD Pipeline）也是微服务发布重要环节，这块主要和研发流程相关，一般需要企业定制，下面是一个可供参考的流水线模型，在镜像治理中心上封装一些轻量级的治理流程，例如只有通过测试环境测试的镜像才能升级发布到UAT环境，只有通过UAT环境测试的镜像才能升级发布到生产环境，通过在流水线上设置一些质量门，保障应用高质量交付到生产。</p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/ELH62gpbFmGnhN6hOuucZerjsiaAOibFPvQ9yZ1weTEiaPEaYpuGsMiaNhWRPsiaqicxeNCsxFxKp3NlL0ddicRnLQGTQ/640?wx_fmt=png" alt=""></p>
+<h3 id="十一、写在最后">十一、写在最后</h3><p>注意，本文限于篇幅，对测试和CI等环节没有涉及，但它们同样是构建微服务架构的重要环节，也有众多成熟的开源成熟产品可选。</p>
+<p>技术选型虽然重要，但还只是微服务建设的一小部分工作，选型后的产品要在企业内部真正落地，形成完整的微服务技术栈体系，则后续还有大量集成、定制、治理、运维和推广等工作。</p>
+<p>本文仅限个人经验视角，选型思路仅供参考借鉴。每个企业的具体上下文（业务场景，团队组织，技术架构等）各不相同，每个架构师的背景经验也各不相同，大家要结合实际自己做出选型，没有最好的技术栈，只有相对较合适的技术栈。另外，好的技术选型是相互借鉴甚至PK出来的，欢迎大家讨论，给出自己的微服务2.0技术栈选型意见。</p>
+<h3 id="十二、附录">十二、附录</h3><ol>
+<li><p>Spring Boot<br><a href="https://github.com/spring-projects/spring-boot" target="_blank" rel="noopener">https://github.com/spring-projects/spring-boot</a></p>
+</li>
+<li><p>Alibaba Dubbo<br><a href="https://github.com/alibaba/dubbo" target="_blank" rel="noopener">https://github.com/alibaba/dubbo</a></p>
+</li>
+<li><p>Google gRPC<br><a href="https://github.com/grpc/grpc" target="_blank" rel="noopener">https://github.com/grpc/grpc</a></p>
+</li>
+<li><p>NetflixOSS Eureka<br><a href="https://github.com/Netflix/eureka" target="_blank" rel="noopener">https://github.com/Netflix/eureka</a></p>
+</li>
+<li><p>Hashicorp Consul<br><a href="https://github.com/hashicorp/consul" target="_blank" rel="noopener">https://github.com/hashicorp/consul</a></p>
+</li>
+<li><p>NetflixOSS Zuul<br><a href="https://github.com/Netflix/zuul" target="_blank" rel="noopener">https://github.com/Netflix/zuul</a></p>
+</li>
+<li><p>Kong<br><a href="https://github.com/Kong/kong" target="_blank" rel="noopener">https://github.com/Kong/kong</a></p>
+</li>
+<li><p>Spring Cloud Config<br><a href="https://github.com/spring-cloud/spring-cloud-config" target="_blank" rel="noopener">https://github.com/spring-cloud/spring-cloud-config</a></p>
+</li>
+<li><p>CTrip Apollo<br><a href="https://github.com/ctripcorp/apollo" target="_blank" rel="noopener">https://github.com/ctripcorp/apollo</a></p>
+</li>
+<li><p>ElasticSearch<br><a href="https://github.com/elastic/elasticsearch" target="_blank" rel="noopener">https://github.com/elastic/elasticsearch</a></p>
+</li>
+<li><p>Yelp Elastalert<br><a href="https://github.com/Yelp/elastalert" target="_blank" rel="noopener">https://github.com/Yelp/elastalert</a></p>
+</li>
+<li><p>Dianping CAT<br><a href="https://github.com/dianping/cat" target="_blank" rel="noopener">https://github.com/dianping/cat</a></p>
+</li>
+<li><p>Zipkin<br><a href="https://github.com/openzipkin/zipkin" target="_blank" rel="noopener">https://github.com/openzipkin/zipkin</a></p>
+</li>
+<li><p>Naver Pinpoint<br><a href="https://github.com/naver/pinpoint" target="_blank" rel="noopener">https://github.com/naver/pinpoint</a></p>
+</li>
+<li><p>OpenTSDB<br><a href="https://github.com/OpenTSDB/opentsdb" target="_blank" rel="noopener">https://github.com/OpenTSDB/opentsdb</a></p>
+</li>
+<li><p>KairosDB<br><a href="https://github.com/kairosdb/kairosdb" target="_blank" rel="noopener">https://github.com/kairosdb/kairosdb</a></p>
+</li>
+<li><p>Argus<br><a href="https://github.com/salesforce/Argus" target="_blank" rel="noopener">https://github.com/salesforce/Argus</a></p>
+</li>
+<li><p>InfluxDB<br><a href="https://github.com/influxdata/influxdb" target="_blank" rel="noopener">https://github.com/influxdata/influxdb</a></p>
+</li>
+<li><p>Prometheus<br><a href="https://github.com/prometheus/prometheus" target="_blank" rel="noopener">https://github.com/prometheus/prometheus</a></p>
+</li>
+<li><p>Grafana<br><a href="https://github.com/grafana/grafana" target="_blank" rel="noopener">https://github.com/grafana/grafana</a></p>
+</li>
+<li><p>Sensu<br><a href="https://github.com/sensu/sensu" target="_blank" rel="noopener">https://github.com/sensu/sensu</a></p>
+</li>
+<li><p>Esty 411<br><a href="https://github.com/etsy/411" target="_blank" rel="noopener">https://github.com/etsy/411</a></p>
+</li>
+<li><p>Zalando ZMon<br><a href="https://github.com/zalando/zmon" target="_blank" rel="noopener">https://github.com/zalando/zmon</a></p>
+</li>
+<li><p>NetflixOSS Hystrix<br><a href="https://github.com/Netflix/Hystrix" target="_blank" rel="noopener">https://github.com/Netflix/Hystrix</a></p>
+</li>
+<li><p>Nginx<br><a href="https://github.com/nginx/nginx" target="_blank" rel="noopener">https://github.com/nginx/nginx</a></p>
+</li>
+<li><p>Apache Kafka<br><a href="https://github.com/apache/kafka" target="_blank" rel="noopener">https://github.com/apache/kafka</a></p>
+</li>
+<li><p>Allegro Hermes<br><a href="https://github.com/allegro/hermes" target="_blank" rel="noopener">https://github.com/allegro/hermes</a></p>
+</li>
+<li><p>Apache Rocketmq<br><a href="https://github.com/apache/rocketmq" target="_blank" rel="noopener">https://github.com/apache/rocketmq</a></p>
+</li>
+<li><p>Rabbitmq<br><a href="https://github.com/rabbitmq/rabbitmq-server" target="_blank" rel="noopener">https://github.com/rabbitmq/rabbitmq-server</a></p>
+</li>
+<li><p>Sohutv CacheCloud<br><a href="https://github.com/sohutv/cachecloud" target="_blank" rel="noopener">https://github.com/sohutv/cachecloud</a></p>
+</li>
+<li><p>Twitter twemproxy<br><a href="https://github.com/twitter/twemproxy" target="_blank" rel="noopener">https://github.com/twitter/twemproxy</a></p>
+</li>
+<li><p>CodisLab codis<br><a href="https://github.com/CodisLabs/codis" target="_blank" rel="noopener">https://github.com/CodisLabs/codis</a></p>
+</li>
+<li><p>Dangdang Sharding-jdbc<br><a href="https://github.com/shardingjdbc/sharding-jdbc" target="_blank" rel="noopener">https://github.com/shardingjdbc/sharding-jdbc</a></p>
+</li>
+<li><p>MyCAT<br><a href="https://github.com/MyCATApache/Mycat-Server" target="_blank" rel="noopener">https://github.com/MyCATApache/Mycat-Server</a></p>
+</li>
+<li><p>Xxl-job<br><a href="https://github.com/xuxueli/xxl-job" target="_blank" rel="noopener">https://github.com/xuxueli/xxl-job</a></p>
+</li>
+<li><p>Dangdang elastic-job<br><a href="https://github.com/elasticjob/elastic-job-lite" target="_blank" rel="noopener">https://github.com/elasticjob/elastic-job-lite</a></p>
+</li>
+<li><p>Apereo CAS<br><a href="https://github.com/apereo/cas" target="_blank" rel="noopener">https://github.com/apereo/cas</a></p>
+</li>
+<li><p>JBoss keycloak<br><a href="https://github.com/keycloak/keycloak" target="_blank" rel="noopener">https://github.com/keycloak/keycloak</a></p>
+</li>
+<li><p>Spring cloud security<br><a href="https://github.com/spring-cloud/spring-cloud-security" target="_blank" rel="noopener">https://github.com/spring-cloud/spring-cloud-security</a></p>
+</li>
+<li><p>OpenID-Connect-Java-Spring-Server<br><a href="https://github.com/mitreid-connect/OpenID-Connect-Java-Spring-Server" target="_blank" rel="noopener">https://github.com/mitreid-connect/OpenID-Connect-Java-Spring-Server</a></p>
+</li>
+<li><p>Google Kubernetes<br><a href="https://github.com/kubernetes/kubernetes" target="_blank" rel="noopener">https://github.com/kubernetes/kubernetes</a></p>
+</li>
+<li><p>Apache Mesos<br><a href="https://github.com/apache/mesos" target="_blank" rel="noopener">https://github.com/apache/mesos</a></p>
+</li>
+<li><p>Vmware Harbor<br><a href="https://github.com/vmware/harbor" target="_blank" rel="noopener">https://github.com/vmware/harbor</a></p>
+</li>
+<li><p>Netflix Spinnaker<br><a href="https://github.com/spinnaker/spinnaker" target="_blank" rel="noopener">https://github.com/spinnaker/spinnaker</a></p>
+</li>
+<li><p>Microservices in Practice – Key Architecture Concepts of an MSA<br><a href="https://wso2.com/whitepapers/microservices-in-practice-key-architectural-concepts-of-an-msa/" target="_blank" rel="noopener">https://wso2.com/whitepapers/microservices-in-practice-key-architectural-concepts-of-an-msa/</a></p>
+</li>
+<li><p>微服务的设计与生态系统<br><a href="http://servicecomb.incubator.apache.org/assets/slides/20170619/MSAPrinciple&amp;EcoSystem.pdf" target="_blank" rel="noopener">http://servicecomb.incubator.apache.org/assets/slides/20170619/MSAPrinciple&amp;EcoSystem.pdf</a></p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://aaron-codes.github.io/2018/07/06/2018-07-09/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1208,6 +1563,349 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://aaron-codes.github.io/2018/07/05/2018-07-05/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Aaron OuYang"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/3776267"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Aaron's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/07/05/2018-07-05/" class="post-title-link" itemprop="url">常见数据结构与算法整理总结（上）</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-07-05 16:09:10 / 修改时间：09:35:50" itemprop="dateCreated datePublished" datetime="2018-07-05T16:09:10+08:00">2018-07-05</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="常见数据结构与算法整理总结（上）">常见数据结构与算法整理总结（上）</h1><p>[toc]</p>
+<blockquote>
+<p>数据结构是以某种形式将数据组织在一起的集合，它不仅存储数据，还支持访问和处理数据的操作。算法是为求解一个问题需要遵循的、被清楚指定的简单指令的集合。下面是自己整理的常用数据结构与算法相关内容，如有错误，欢迎指出。</p>
+</blockquote>
+<p>为了便于描述，文中涉及到的代码部分都是用Java语言编写的，其实Java本身对常见的几种数据结构，线性表、栈、队列等都提供了较好的实现，就是我们经常用到的Java集合框架，有需要的可以阅读这篇文章。Java - 集合框架完全解析</p>
+<h2 id="一、线性表">一、线性表</h2><p>线性表是最常用且最简单的一种数据结构，它是n个数据元素的有限序列。</p>
+<p>实现线性表的方式一般有两种，一种是使用数组存储线性表的元素，即用一组连续的存储单元依次存储线性表的数据元素。另一种是使用链表存储线性表的元素，即用一组任意的存储单元存储线性表的数据元素（存储单元可以是连续的，也可以是不连续的）。</p>
+<blockquote>
+<p>数组实现</p>
+</blockquote>
+<p>数组是一种大小固定的数据结构，对线性表的所有操作都可以通过数组来实现。虽然数组一旦创建之后，它的大小就无法改变了，但是当数组不能再存储线性表中的新元素时，我们可以创建一个新的大的数组来替换当前数组。这样就可以使用数组实现动态的数据结构。</p>
+<ul>
+<li>代码1 创建一个更大的数组来替换当前数组</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">int[] oldArray = new int[10];</span><br><span class="line">        </span><br><span class="line">int[] newArray = new int[20];</span><br><span class="line">        </span><br><span class="line">for (int i = 0; i &lt; oldArray.length; i++) &#123;</span><br><span class="line">    newArray[i] = oldArray[i];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 也可以使用System.arraycopy方法来实现数组间的复制     </span><br><span class="line">// System.arraycopy(oldArray, 0, newArray, 0, oldArray.length);</span><br><span class="line">        </span><br><span class="line">oldArray = newArray;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>代码2 在数组位置index上添加元素e</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">//oldArray 表示当前存储元素的数组</span><br><span class="line">//size 表示当前元素个数</span><br><span class="line">public void add(int index, int e) &#123;</span><br><span class="line"></span><br><span class="line">    if (index &gt; size || index &lt; 0) &#123;</span><br><span class="line">        System.out.println(&quot;位置不合法...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //如果数组已经满了 就扩容</span><br><span class="line">    if (size &gt;= oldArray.length) &#123;</span><br><span class="line">        // 扩容函数可参考代码1</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    for (int i = size - 1; i &gt;= index; i--) &#123;</span><br><span class="line">        oldArray[i + 1] = oldArray[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //将数组elementData从位置index的所有元素往后移一位</span><br><span class="line">    // System.arraycopy(oldArray, index, oldArray, index + 1,size - index);</span><br><span class="line"></span><br><span class="line">    oldArray[index] = e;</span><br><span class="line"></span><br><span class="line">    size++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面简单写出了数组实现线性表的两个典型函数，具体我们可以参考Java里面的ArrayList集合类的源码。数组实现的线性表优点在于可以通过下标来访问或者修改元素，比较高效，主要缺点在于插入和删除的花费开销较大，比如当在第一个位置前插入一个元素，那么首先要把所有的元素往后移动一个位置。为了提高在任意位置添加或者删除元素的效率，可以采用链式结构来实现线性表。</p>
+<blockquote>
+<p>链表</p>
+</blockquote>
+<p>链表是一种物理存储单元上非连续、非顺序的存储结构，数据元素的逻辑顺序是通过链表中的指针链接次序实现的。链表由一系列节点组成，这些节点不必在内存中相连。每个节点由数据部分Data和链部分Next，Next指向下一个节点，这样当添加或者删除时，只需要改变相关节点的Next的指向，效率很高。</p>
+<p><img src="http://7xigvj.com1.z0.glb.clouddn.com/15307206577653.jpg" alt=""></p>
+<p>下面主要用代码来展示链表的一些基本操作，需要注意的是，这里主要是以单链表为例，暂时不考虑双链表和循环链表。</p>
+<ul>
+<li>代码3 链表的节点</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class Node&lt;E&gt; &#123;</span><br><span class="line"></span><br><span class="line">    E item;</span><br><span class="line">    Node&lt;E&gt; next;</span><br><span class="line">    </span><br><span class="line">    //构造函数</span><br><span class="line">    Node(E element) &#123;</span><br><span class="line">       this.item = element;</span><br><span class="line">       this.next = null;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>代码4 定义好节点后，使用前一般是对头节点和尾节点进行初始化</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//头节点和尾节点都为空 链表为空</span><br><span class="line">Node&lt;E&gt; head = null;</span><br><span class="line">Node&lt;E&gt; tail = null;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>代码5 空链表创建一个新节点</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//创建一个新的节点 并让head指向此节点</span><br><span class="line">head = new Node(&quot;nodedata1&quot;);</span><br><span class="line"></span><br><span class="line">//让尾节点也指向此节点</span><br><span class="line">tail = head;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>代码6 链表追加一个节点</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//创建新节点 同时和最后一个节点连接起来</span><br><span class="line">tail.next = new Node(&quot;node1data2&quot;);</span><br><span class="line"></span><br><span class="line">//尾节点指向新的节点</span><br><span class="line">tail = tail.next;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>代码7 顺序遍历链表</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Node&lt;String&gt; current = head;</span><br><span class="line">while (current != null) &#123;</span><br><span class="line">    System.out.println(current.item);</span><br><span class="line">    current = current.next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>代码8 倒序遍历链表</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">static void printListRev(Node&lt;String&gt; head) &#123;</span><br><span class="line">//倒序遍历链表主要用了递归的思想</span><br><span class="line">    if (head != null) &#123;</span><br><span class="line">        printListRev(head.next);</span><br><span class="line">        System.out.println(head.item);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>代码 单链表反转</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">//单链表反转 主要是逐一改变两个节点间的链接关系来完成</span><br><span class="line">static Node&lt;String&gt; revList(Node&lt;String&gt; head) &#123;</span><br><span class="line"></span><br><span class="line">    if (head == null) &#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Node&lt;String&gt; nodeResult = null;</span><br><span class="line"></span><br><span class="line">    Node&lt;String&gt; nodePre = null;</span><br><span class="line">    Node&lt;String&gt; current = head;</span><br><span class="line"></span><br><span class="line">    while (current != null) &#123;</span><br><span class="line"></span><br><span class="line">        Node&lt;String&gt; nodeNext = current.next;</span><br><span class="line"></span><br><span class="line">        if (nodeNext == null) &#123;</span><br><span class="line">            nodeResult = current;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        current.next = nodePre;</span><br><span class="line">        nodePre = current;</span><br><span class="line">        current = nodeNext;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return nodeResult;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的几段代码主要展示了链表的几个基本操作，还有很多像获取指定元素，移除元素等操作大家可以自己完成，写这些代码的时候一定要理清节点之间关系，这样才不容易出错。</p>
+<p>链表的实现还有其它的方式，常见的有循环单链表，双向链表，循环双向链表。 循环单链表 主要是链表的最后一个节点指向第一个节点，整体构成一个链环。 双向链表 主要是节点中包含两个指针部分，一个指向前驱元，一个指向后继元，JDK中LinkedList集合类的实现就是双向链表。<strong> 循环双向链表</strong> 是最后一个节点指向第一个节点。</p>
+<h2 id="二、栈与队列">二、栈与队列</h2><p>栈和队列也是比较常见的数据结构，它们是比较特殊的线性表，因为对于栈来说，访问、插入和删除元素只能在栈顶进行，对于队列来说，元素只能从队列尾插入，从队列头访问和删除。</p>
+<blockquote>
+<p>栈</p>
+</blockquote>
+<p>栈是限制插入和删除只能在一个位置上进行的表，该位置是表的末端，叫作栈顶，对栈的基本操作有push(进栈)和pop(出栈)，前者相当于插入，后者相当于删除最后一个元素。栈有时又叫作LIFO(Last In First Out)表，即后进先出。</p>
+<p><img src="http://7xigvj.com1.z0.glb.clouddn.com/15307210138875.jpg" alt="栈的模型
+"></p>
+<p>下面我们看一道经典题目，加深对栈的理解。</p>
+<p><img src="http://7xigvj.com1.z0.glb.clouddn.com/15307210317919.jpg" alt="关于栈的一道经典题目
+"></p>
+<p>上图中的答案是C，其中的原理可以好好想一想。</p>
+<p>因为栈也是一个表，所以任何实现表的方法都能实现栈。我们打开JDK中的类Stack的源码，可以看到它就是继承类Vector的。当然，Stack是Java2前的容器类，现在我们可以使用LinkedList来进行栈的所有操作。</p>
+<blockquote>
+<p>队列</p>
+</blockquote>
+<p>队列是一种特殊的线性表，特殊之处在于它只允许在表的前端（front）进行删除操作，而在表的后端（rear）进行插入操作，和栈一样，队列是一种操作受限制的线性表。进行插入操作的端称为队尾，进行删除操作的端称为队头。</p>
+<p><img src="http://7xigvj.com1.z0.glb.clouddn.com/15307210815831.jpg" alt="队列示意图
+"></p>
+<p>我们可以使用链表来实现队列，下面代码简单展示了利用LinkedList来实现队列类。</p>
+<ul>
+<li>代码9 简单实现队列类</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class MyQueue&lt;E&gt; &#123;</span><br><span class="line"></span><br><span class="line">    private LinkedList&lt;E&gt; list = new LinkedList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    // 入队</span><br><span class="line">    public void enqueue(E e) &#123;</span><br><span class="line">        list.addLast(e);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 出队</span><br><span class="line">    public E dequeue() &#123;</span><br><span class="line">        return list.removeFirst();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>普通的队列是一种先进先出的数据结构，而优先队列中，元素都被赋予优先级。当访问元素的时候，具有最高优先级的元素最先被删除。优先队列在生活中的应用还是比较多的，比如医院的急症室为病人赋予优先级，具有最高优先级的病人最先得到治疗。在Java集合框架中，类PriorityQueue就是优先队列的实现类，具体大家可以去阅读源码。</p>
+<h2 id="三、树与二叉树">三、树与二叉树</h2><p>树型结构是一类非常重要的非线性数据结构，其中以树和二叉树最为常用。在介绍二叉树之前，我们先简单了解一下树的相关内容。</p>
+<blockquote>
+<p>树</p>
+</blockquote>
+<p><strong> 树 是由n（n&gt;=1）个有限节点组成一个具有层次关系的集合。它具有以下特点：每个节点有零个或多个子节点；没有父节点的节点称为 根 节点；每一个非根节点有且只有一个 父节点 </strong>；除了根节点外，每个子节点可以分为多个不相交的子树。</p>
+<p><img src="http://7xigvj.com1.z0.glb.clouddn.com/15307211821748.jpg" alt="树的结构
+"></p>
+<blockquote>
+<p>二叉树基本概念</p>
+</blockquote>
+<ul>
+<li><strong>定义</strong></li>
+</ul>
+<p>二叉树是每个节点最多有两棵子树的树结构。通常子树被称作“左子树”和“右子树”。二叉树常被用于实现二叉查找树和二叉堆。</p>
+<ul>
+<li><strong>相关性质</strong></li>
+</ul>
+<p>二叉树的每个结点至多只有2棵子树(不存在度大于2的结点)，二叉树的子树有左右之分，次序不能颠倒。</p>
+<p>二叉树的第i层至多有2(i-1)个结点；深度为k的二叉树至多有2k-1个结点。</p>
+<p>一棵深度为k，且有2^k-1个节点的二叉树称之为<strong> 满二叉树 </strong>；</p>
+<p>深度为k，有n个节点的二叉树，当且仅当其每一个节点都与深度为k的满二叉树中，序号为1至n的节点对应时，称之为<strong> 完全二叉树 </strong>。</p>
+<p><img src="http://7xigvj.com1.z0.glb.clouddn.com/15307212581214.jpg" alt=""></p>
+<ul>
+<li>三种遍历方法</li>
+</ul>
+<p>在二叉树的一些应用中，常常要求在树中查找具有某种特征的节点，或者对树中全部节点进行某种处理，这就涉及到二叉树的遍历。二叉树主要是由3个基本单元组成，根节点、左子树和右子树。如果限定先左后右，那么根据这三个部分遍历的顺序不同，可以分为先序遍历、中序遍历和后续遍历三种。</p>
+<p>(1) 先序遍历 若二叉树为空，则空操作，否则先访问根节点，再先序遍历左子树，最后先序遍历右子树。 (2) 中序遍历 若二叉树为空，则空操作，否则先中序遍历左子树，再访问根节点，最后中序遍历右子树。(3) 后序遍历 若二叉树为空，则空操作，否则先后序遍历左子树访问根节点，再后序遍历右子树，最后访问根节点。</p>
+<p><img src="http://7xigvj.com1.z0.glb.clouddn.com/15307212790800.jpg" alt=""></p>
+<p>给定二叉树写出三种遍历结果</p>
+<ul>
+<li>树和二叉树的区别</li>
+</ul>
+<p>(1) 二叉树每个节点最多有2个子节点，树则无限制。 (2) 二叉树中节点的子树分为左子树和右子树，即使某节点只有一棵子树，也要指明该子树是左子树还是右子树，即二叉树是有序的。 (3) 树决不能为空，它至少有一个节点，而一棵二叉树可以是空的。</p>
+<p>上面我们主要对二叉树的相关概念进行了介绍，下面我们将从二叉查找树开始，介绍二叉树的几种常见类型，同时将之前的理论部分用代码实现出来。</p>
+<blockquote>
+<p>二叉查找树</p>
+</blockquote>
+<ul>
+<li>定义</li>
+</ul>
+<p>二叉查找树就是二叉排序树，也叫二叉搜索树。二叉查找树或者是一棵空树，或者是具有下列性质的二叉树： (1) 若左子树不空，则左子树上所有结点的值均小于它的根结点的值；(2) 若右子树不空，则右子树上所有结点的值均大于它的根结点的值；(3) 左、右子树也分别为二叉排序树；(4) 没有键值相等的结点。</p>
+<p><img src="http://7xigvj.com1.z0.glb.clouddn.com/15307213483050.jpg" alt="典型的二叉查找树的构建过程
+"></p>
+<ul>
+<li>性能分析</li>
+</ul>
+<p>对于二叉查找树来说，当给定值相同但顺序不同时，所构建的二叉查找树形态是不同的，下面看一个例子。</p>
+<p><img src="http://7xigvj.com1.z0.glb.clouddn.com/15307214196777.jpg" alt="不同形态平衡二叉树的ASL不同
+"></p>
+<p>可以看到，含有n个节点的二叉查找树的平均查找长度和树的形态有关。最坏情况下，当先后插入的关键字有序时，构成的二叉查找树蜕变为单支树，树的深度为n，其平均查找长度(n+1)/2(和顺序查找相同），最好的情况是二叉查找树的形态和折半查找的判定树相同，其平均查找长度和log2(n)成正比。平均情况下，二叉查找树的平均查找长度和logn是等数量级的，所以为了获得更好的性能，通常在二叉查找树的构建过程需要进行“平衡化处理”，之后我们将介绍平衡二叉树和红黑树，这些均可以使查找树的高度为O(log(n))。</p>
+<ul>
+<li>代码10 二叉树的节点</li>
+</ul>
+<p>class TreeNode<e> {</e></p>
+<pre><code><span class="keyword">E</span> element;
+TreeNode&lt;<span class="keyword">E</span>&gt; left;
+TreeNode&lt;<span class="keyword">E</span>&gt; right;
+
+public TreeNode(<span class="keyword">E</span> <span class="keyword">e</span>) {
+    element = <span class="keyword">e</span>;
+}
+</code></pre><p>}<br>二叉查找树的三种遍历都可以直接用递归的方法来实现：</p>
+<ul>
+<li>代码12 先序遍历</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">protected void preorder(TreeNode&lt;E&gt; root) &#123;</span><br><span class="line"></span><br><span class="line">    if (root == null)</span><br><span class="line">        return;</span><br><span class="line"></span><br><span class="line">    System.out.println(root.element + &quot; &quot;);</span><br><span class="line"></span><br><span class="line">    preorder(root.left);</span><br><span class="line"></span><br><span class="line">    preorder(root.right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>代码13 中序遍历</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">protected void inorder(TreeNode&lt;E&gt; root) &#123;</span><br><span class="line"></span><br><span class="line">    if (root == null)</span><br><span class="line">        return;</span><br><span class="line"></span><br><span class="line">    inorder(root.left);</span><br><span class="line"></span><br><span class="line">    System.out.println(root.element + &quot; &quot;);</span><br><span class="line"></span><br><span class="line">    inorder(root.right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>代码14 后序遍历</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">protected void postorder(TreeNode&lt;E&gt; root) &#123;</span><br><span class="line"></span><br><span class="line">    if (root == null)</span><br><span class="line">        return;</span><br><span class="line"></span><br><span class="line">    postorder(root.left);</span><br><span class="line"></span><br><span class="line">    postorder(root.right);</span><br><span class="line"></span><br><span class="line">    System.out.println(root.element + &quot; &quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>代码15 二叉查找树的简单实现</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @author JackalTsc</span><br><span class="line"> */</span><br><span class="line">public class MyBinSearchTree&lt;E extends Comparable&lt;E&gt;&gt; &#123;</span><br><span class="line"></span><br><span class="line">    // 根</span><br><span class="line">    private TreeNode&lt;E&gt; root;</span><br><span class="line"></span><br><span class="line">    // 默认构造函数</span><br><span class="line">    public MyBinSearchTree() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 二叉查找树的搜索</span><br><span class="line">    public boolean search(E e) &#123;</span><br><span class="line"></span><br><span class="line">        TreeNode&lt;E&gt; current = root;</span><br><span class="line"></span><br><span class="line">        while (current != null) &#123;</span><br><span class="line"></span><br><span class="line">            if (e.compareTo(current.element) &lt; 0) &#123;</span><br><span class="line">                current = current.left;</span><br><span class="line">            &#125; else if (e.compareTo(current.element) &gt; 0) &#123;</span><br><span class="line">                current = current.right;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 二叉查找树的插入</span><br><span class="line">    public boolean insert(E e) &#123;</span><br><span class="line"></span><br><span class="line">        // 如果之前是空二叉树 插入的元素就作为根节点</span><br><span class="line">        if (root == null) &#123;</span><br><span class="line">            root = createNewNode(e);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            // 否则就从根节点开始遍历 直到找到合适的父节点</span><br><span class="line">            TreeNode&lt;E&gt; parent = null;</span><br><span class="line">            TreeNode&lt;E&gt; current = root;</span><br><span class="line">            while (current != null) &#123;</span><br><span class="line">                if (e.compareTo(current.element) &lt; 0) &#123;</span><br><span class="line">                    parent = current;</span><br><span class="line">                    current = current.left;</span><br><span class="line">                &#125; else if (e.compareTo(current.element) &gt; 0) &#123;</span><br><span class="line">                    parent = current;</span><br><span class="line">                    current = current.right;</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    return false;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            // 插入</span><br><span class="line">            if (e.compareTo(parent.element) &lt; 0) &#123;</span><br><span class="line">                parent.left = createNewNode(e);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                parent.right = createNewNode(e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 创建新的节点</span><br><span class="line">    protected TreeNode&lt;E&gt; createNewNode(E e) &#123;</span><br><span class="line">        return new TreeNode(e);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 二叉树的节点</span><br><span class="line">class TreeNode&lt;E extends Comparable&lt;E&gt;&gt; &#123;</span><br><span class="line"></span><br><span class="line">    E element;</span><br><span class="line">    TreeNode&lt;E&gt; left;</span><br><span class="line">    TreeNode&lt;E&gt; right;</span><br><span class="line"></span><br><span class="line">    public TreeNode(E e) &#123;</span><br><span class="line">        element = e;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码15主要展示了一个自己实现的简单的二叉查找树，其中包括了几个常见的操作，当然更多的操作还是需要大家自己去完成。因为在二叉查找树中删除节点的操作比较复杂，所以下面我详细介绍一下这里。</p>
+<p>二叉查找树中删除节点分析<br>要在二叉查找树中删除一个元素，首先需要定位包含该元素的节点，以及它的父节点。假设current指向二叉查找树中包含该元素的节点，而parent指向current节点的父节点，current节点可能是parent节点的左孩子，也可能是右孩子。这里需要考虑两种情况：</p>
+<p>1、current节点没有左孩子，那么只需要将patent节点和current节点的右孩子相连。<br>2、current节点有一个左孩子，假设rightMost指向包含current节点的左子树中最大元素的节点，而parentOfRightMost指向rightMost节点的父节点。那么先使用rightMost节点中的元素值替换current节点中的元素值，将parentOfRightMost节点和rightMost节点的左孩子相连，然后删除rightMost节点。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">// 二叉搜索树删除节点</span><br><span class="line">public boolean delete(E e) &#123;</span><br><span class="line"></span><br><span class="line">    TreeNode&lt;E&gt; parent = null;</span><br><span class="line">    TreeNode&lt;E&gt; current = root;</span><br><span class="line"></span><br><span class="line">    // 找到要删除的节点的位置</span><br><span class="line">    while (current != null) &#123;</span><br><span class="line">        if (e.compareTo(current.element) &lt; 0) &#123;</span><br><span class="line">            parent = current;</span><br><span class="line">            current = current.left;</span><br><span class="line">        &#125; else if (e.compareTo(current.element) &gt; 0) &#123;</span><br><span class="line">            parent = current;</span><br><span class="line">            current = current.right;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 没找到要删除的节点</span><br><span class="line">    if (current == null) &#123;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 考虑第一种情况</span><br><span class="line">    if (current.left == null) &#123;</span><br><span class="line">        if (parent == null) &#123;</span><br><span class="line">            root = current.right;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            if (e.compareTo(parent.element) &lt; 0) &#123;</span><br><span class="line">                parent.left = current.right;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                parent.right = current.right;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; else &#123; // 考虑第二种情况</span><br><span class="line">        TreeNode&lt;E&gt; parentOfRightMost = current;</span><br><span class="line">        TreeNode&lt;E&gt; rightMost = current.left;</span><br><span class="line">        // 找到左子树中最大的元素节点</span><br><span class="line">        while (rightMost.right != null) &#123;</span><br><span class="line">            parentOfRightMost = rightMost;</span><br><span class="line">            rightMost = rightMost.right;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 替换</span><br><span class="line">        current.element = rightMost.element;</span><br><span class="line"></span><br><span class="line">        // parentOfRightMost和rightMost左孩子相连</span><br><span class="line">        if (parentOfRightMost.right == rightMost) &#123;</span><br><span class="line">            parentOfRightMost.right = rightMost.left;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            parentOfRightMost.left = rightMost.left;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>平衡二叉树</p>
+</blockquote>
+<p>平衡二叉树又称AVL树，它或者是一棵空树，或者是具有下列性质的二叉树：它的左子树和右子树都是平衡二叉树，且左子树和右子树的深度之差的绝对值不超过1。</p>
+<p><img src="http://7xigvj.com1.z0.glb.clouddn.com/15307217090333.jpg" alt="平衡二叉树
+"></p>
+<p>AVL树是最先发明的自平衡二叉查找树算法。在AVL中任何节点的两个儿子子树的高度最大差别为1，所以它也被称为高度平衡树，n个结点的AVL树最大深度约1.44log2n。查找、插入和删除在平均和最坏情况下都是O（log n）。增加和删除可能需要通过一次或多次树旋转来重新平衡这个树。</p>
+<blockquote>
+<p>红黑树</p>
+</blockquote>
+<p>红黑树是平衡二叉树的一种，它保证在最坏情况下基本动态集合操作的事件复杂度为O(log n)。红黑树和平衡二叉树区别如下：(1) 红黑树放弃了追求完全平衡，追求大致平衡，在与平衡二叉树的时间复杂度相差不大的情况下，保证每次插入最多只需要三次旋转就能达到平衡，实现起来也更为简单。(2) 平衡二叉树追求绝对平衡，条件比较苛刻，实现起来比较麻烦，每次插入新节点之后需要旋转的次数不能预知。点击查看更多</p>
+<h2 id="四、图">四、图</h2><ul>
+<li>简介</li>
+</ul>
+<p>图是一种较线性表和树更为复杂的数据结构，在线性表中，数据元素之间仅有线性关系，在树形结构中，数据元素之间有着明显的层次关系，而在图形结构中，节点之间的关系可以是任意的，图中任意两个数据元素之间都可能相关。图的应用相当广泛，特别是近年来的迅速发展，已经渗入到诸如语言学、逻辑学、物理、化学、电讯工程、计算机科学以及数学的其他分支中。</p>
+<ul>
+<li>相关阅读</li>
+</ul>
+<p>因为图这部分的内容还是比较多的，这里就不详细介绍了，有需要的可以自己搜索相关资料。</p>
+<p>(1) 《百度百科对图的介绍》<br>(2) 《数据结构之图（存储结构、遍历）》</p>
+<h2 id="五、总结">五、总结</h2><p>到这里，关于常见的数据结构的整理就结束了，断断续续大概花了两天时间写完，在总结的过程中，通过查阅相关资料，结合书本内容，收获还是很大的，在下一篇博客中将会介绍常用数据结构与算法整理总结（下）之算法篇，欢迎大家关注。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://aaron-codes.github.io/2018/07/05/2018-07-05-1/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1501,349 +2199,6 @@ return flag;
 </code></pre><p>}<br>其它算法题</p>
 <p>1、<a href="http://www.codeceo.com/article/15-algorithms-question.html" target="_blank" rel="noopener">15道使用频率极高的基础算法题</a><br>2、<a href="https://blog.csdn.net/luckyxiaoqiang/article/details/7518888/" target="_blank" rel="noopener">二叉树相关算法题</a><br>3、<a href="https://blog.csdn.net/kerryfish/article/details/24043099" target="_blank" rel="noopener">链表相关算法题</a><br>4、<a href="http://blog.chinaunix.net/uid-20498361-id-1940276.html" target="_blank" rel="noopener">字符串相关算法问题</a></p>
 <h2 id="六、总结">六、总结</h2><p>以上就是自己对常见的算法相关内容的总结，算法虐我千百遍，我待算法如初恋，革命尚未成功，同志仍需刷题，加油。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://aaron-codes.github.io/2018/07/05/2018-07-05/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Aaron OuYang"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/3776267"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Aaron's Blog"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/07/05/2018-07-05/" class="post-title-link" itemprop="url">常见数据结构与算法整理总结（上）</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-07-05 16:09:10 / 修改时间：09:35:50" itemprop="dateCreated datePublished" datetime="2018-07-05T16:09:10+08:00">2018-07-05</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="常见数据结构与算法整理总结（上）">常见数据结构与算法整理总结（上）</h1><p>[toc]</p>
-<blockquote>
-<p>数据结构是以某种形式将数据组织在一起的集合，它不仅存储数据，还支持访问和处理数据的操作。算法是为求解一个问题需要遵循的、被清楚指定的简单指令的集合。下面是自己整理的常用数据结构与算法相关内容，如有错误，欢迎指出。</p>
-</blockquote>
-<p>为了便于描述，文中涉及到的代码部分都是用Java语言编写的，其实Java本身对常见的几种数据结构，线性表、栈、队列等都提供了较好的实现，就是我们经常用到的Java集合框架，有需要的可以阅读这篇文章。Java - 集合框架完全解析</p>
-<h2 id="一、线性表">一、线性表</h2><p>线性表是最常用且最简单的一种数据结构，它是n个数据元素的有限序列。</p>
-<p>实现线性表的方式一般有两种，一种是使用数组存储线性表的元素，即用一组连续的存储单元依次存储线性表的数据元素。另一种是使用链表存储线性表的元素，即用一组任意的存储单元存储线性表的数据元素（存储单元可以是连续的，也可以是不连续的）。</p>
-<blockquote>
-<p>数组实现</p>
-</blockquote>
-<p>数组是一种大小固定的数据结构，对线性表的所有操作都可以通过数组来实现。虽然数组一旦创建之后，它的大小就无法改变了，但是当数组不能再存储线性表中的新元素时，我们可以创建一个新的大的数组来替换当前数组。这样就可以使用数组实现动态的数据结构。</p>
-<ul>
-<li>代码1 创建一个更大的数组来替换当前数组</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">int[] oldArray = new int[10];</span><br><span class="line">        </span><br><span class="line">int[] newArray = new int[20];</span><br><span class="line">        </span><br><span class="line">for (int i = 0; i &lt; oldArray.length; i++) &#123;</span><br><span class="line">    newArray[i] = oldArray[i];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 也可以使用System.arraycopy方法来实现数组间的复制     </span><br><span class="line">// System.arraycopy(oldArray, 0, newArray, 0, oldArray.length);</span><br><span class="line">        </span><br><span class="line">oldArray = newArray;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>代码2 在数组位置index上添加元素e</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">//oldArray 表示当前存储元素的数组</span><br><span class="line">//size 表示当前元素个数</span><br><span class="line">public void add(int index, int e) &#123;</span><br><span class="line"></span><br><span class="line">    if (index &gt; size || index &lt; 0) &#123;</span><br><span class="line">        System.out.println(&quot;位置不合法...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //如果数组已经满了 就扩容</span><br><span class="line">    if (size &gt;= oldArray.length) &#123;</span><br><span class="line">        // 扩容函数可参考代码1</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    for (int i = size - 1; i &gt;= index; i--) &#123;</span><br><span class="line">        oldArray[i + 1] = oldArray[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //将数组elementData从位置index的所有元素往后移一位</span><br><span class="line">    // System.arraycopy(oldArray, index, oldArray, index + 1,size - index);</span><br><span class="line"></span><br><span class="line">    oldArray[index] = e;</span><br><span class="line"></span><br><span class="line">    size++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面简单写出了数组实现线性表的两个典型函数，具体我们可以参考Java里面的ArrayList集合类的源码。数组实现的线性表优点在于可以通过下标来访问或者修改元素，比较高效，主要缺点在于插入和删除的花费开销较大，比如当在第一个位置前插入一个元素，那么首先要把所有的元素往后移动一个位置。为了提高在任意位置添加或者删除元素的效率，可以采用链式结构来实现线性表。</p>
-<blockquote>
-<p>链表</p>
-</blockquote>
-<p>链表是一种物理存储单元上非连续、非顺序的存储结构，数据元素的逻辑顺序是通过链表中的指针链接次序实现的。链表由一系列节点组成，这些节点不必在内存中相连。每个节点由数据部分Data和链部分Next，Next指向下一个节点，这样当添加或者删除时，只需要改变相关节点的Next的指向，效率很高。</p>
-<p><img src="http://7xigvj.com1.z0.glb.clouddn.com/15307206577653.jpg" alt=""></p>
-<p>下面主要用代码来展示链表的一些基本操作，需要注意的是，这里主要是以单链表为例，暂时不考虑双链表和循环链表。</p>
-<ul>
-<li>代码3 链表的节点</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class Node&lt;E&gt; &#123;</span><br><span class="line"></span><br><span class="line">    E item;</span><br><span class="line">    Node&lt;E&gt; next;</span><br><span class="line">    </span><br><span class="line">    //构造函数</span><br><span class="line">    Node(E element) &#123;</span><br><span class="line">       this.item = element;</span><br><span class="line">       this.next = null;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>代码4 定义好节点后，使用前一般是对头节点和尾节点进行初始化</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//头节点和尾节点都为空 链表为空</span><br><span class="line">Node&lt;E&gt; head = null;</span><br><span class="line">Node&lt;E&gt; tail = null;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>代码5 空链表创建一个新节点</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//创建一个新的节点 并让head指向此节点</span><br><span class="line">head = new Node(&quot;nodedata1&quot;);</span><br><span class="line"></span><br><span class="line">//让尾节点也指向此节点</span><br><span class="line">tail = head;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>代码6 链表追加一个节点</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//创建新节点 同时和最后一个节点连接起来</span><br><span class="line">tail.next = new Node(&quot;node1data2&quot;);</span><br><span class="line"></span><br><span class="line">//尾节点指向新的节点</span><br><span class="line">tail = tail.next;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>代码7 顺序遍历链表</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Node&lt;String&gt; current = head;</span><br><span class="line">while (current != null) &#123;</span><br><span class="line">    System.out.println(current.item);</span><br><span class="line">    current = current.next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>代码8 倒序遍历链表</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">static void printListRev(Node&lt;String&gt; head) &#123;</span><br><span class="line">//倒序遍历链表主要用了递归的思想</span><br><span class="line">    if (head != null) &#123;</span><br><span class="line">        printListRev(head.next);</span><br><span class="line">        System.out.println(head.item);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>代码 单链表反转</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">//单链表反转 主要是逐一改变两个节点间的链接关系来完成</span><br><span class="line">static Node&lt;String&gt; revList(Node&lt;String&gt; head) &#123;</span><br><span class="line"></span><br><span class="line">    if (head == null) &#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Node&lt;String&gt; nodeResult = null;</span><br><span class="line"></span><br><span class="line">    Node&lt;String&gt; nodePre = null;</span><br><span class="line">    Node&lt;String&gt; current = head;</span><br><span class="line"></span><br><span class="line">    while (current != null) &#123;</span><br><span class="line"></span><br><span class="line">        Node&lt;String&gt; nodeNext = current.next;</span><br><span class="line"></span><br><span class="line">        if (nodeNext == null) &#123;</span><br><span class="line">            nodeResult = current;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        current.next = nodePre;</span><br><span class="line">        nodePre = current;</span><br><span class="line">        current = nodeNext;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return nodeResult;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面的几段代码主要展示了链表的几个基本操作，还有很多像获取指定元素，移除元素等操作大家可以自己完成，写这些代码的时候一定要理清节点之间关系，这样才不容易出错。</p>
-<p>链表的实现还有其它的方式，常见的有循环单链表，双向链表，循环双向链表。 循环单链表 主要是链表的最后一个节点指向第一个节点，整体构成一个链环。 双向链表 主要是节点中包含两个指针部分，一个指向前驱元，一个指向后继元，JDK中LinkedList集合类的实现就是双向链表。<strong> 循环双向链表</strong> 是最后一个节点指向第一个节点。</p>
-<h2 id="二、栈与队列">二、栈与队列</h2><p>栈和队列也是比较常见的数据结构，它们是比较特殊的线性表，因为对于栈来说，访问、插入和删除元素只能在栈顶进行，对于队列来说，元素只能从队列尾插入，从队列头访问和删除。</p>
-<blockquote>
-<p>栈</p>
-</blockquote>
-<p>栈是限制插入和删除只能在一个位置上进行的表，该位置是表的末端，叫作栈顶，对栈的基本操作有push(进栈)和pop(出栈)，前者相当于插入，后者相当于删除最后一个元素。栈有时又叫作LIFO(Last In First Out)表，即后进先出。</p>
-<p><img src="http://7xigvj.com1.z0.glb.clouddn.com/15307210138875.jpg" alt="栈的模型
-"></p>
-<p>下面我们看一道经典题目，加深对栈的理解。</p>
-<p><img src="http://7xigvj.com1.z0.glb.clouddn.com/15307210317919.jpg" alt="关于栈的一道经典题目
-"></p>
-<p>上图中的答案是C，其中的原理可以好好想一想。</p>
-<p>因为栈也是一个表，所以任何实现表的方法都能实现栈。我们打开JDK中的类Stack的源码，可以看到它就是继承类Vector的。当然，Stack是Java2前的容器类，现在我们可以使用LinkedList来进行栈的所有操作。</p>
-<blockquote>
-<p>队列</p>
-</blockquote>
-<p>队列是一种特殊的线性表，特殊之处在于它只允许在表的前端（front）进行删除操作，而在表的后端（rear）进行插入操作，和栈一样，队列是一种操作受限制的线性表。进行插入操作的端称为队尾，进行删除操作的端称为队头。</p>
-<p><img src="http://7xigvj.com1.z0.glb.clouddn.com/15307210815831.jpg" alt="队列示意图
-"></p>
-<p>我们可以使用链表来实现队列，下面代码简单展示了利用LinkedList来实现队列类。</p>
-<ul>
-<li>代码9 简单实现队列类</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class MyQueue&lt;E&gt; &#123;</span><br><span class="line"></span><br><span class="line">    private LinkedList&lt;E&gt; list = new LinkedList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    // 入队</span><br><span class="line">    public void enqueue(E e) &#123;</span><br><span class="line">        list.addLast(e);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 出队</span><br><span class="line">    public E dequeue() &#123;</span><br><span class="line">        return list.removeFirst();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>普通的队列是一种先进先出的数据结构，而优先队列中，元素都被赋予优先级。当访问元素的时候，具有最高优先级的元素最先被删除。优先队列在生活中的应用还是比较多的，比如医院的急症室为病人赋予优先级，具有最高优先级的病人最先得到治疗。在Java集合框架中，类PriorityQueue就是优先队列的实现类，具体大家可以去阅读源码。</p>
-<h2 id="三、树与二叉树">三、树与二叉树</h2><p>树型结构是一类非常重要的非线性数据结构，其中以树和二叉树最为常用。在介绍二叉树之前，我们先简单了解一下树的相关内容。</p>
-<blockquote>
-<p>树</p>
-</blockquote>
-<p><strong> 树 是由n（n&gt;=1）个有限节点组成一个具有层次关系的集合。它具有以下特点：每个节点有零个或多个子节点；没有父节点的节点称为 根 节点；每一个非根节点有且只有一个 父节点 </strong>；除了根节点外，每个子节点可以分为多个不相交的子树。</p>
-<p><img src="http://7xigvj.com1.z0.glb.clouddn.com/15307211821748.jpg" alt="树的结构
-"></p>
-<blockquote>
-<p>二叉树基本概念</p>
-</blockquote>
-<ul>
-<li><strong>定义</strong></li>
-</ul>
-<p>二叉树是每个节点最多有两棵子树的树结构。通常子树被称作“左子树”和“右子树”。二叉树常被用于实现二叉查找树和二叉堆。</p>
-<ul>
-<li><strong>相关性质</strong></li>
-</ul>
-<p>二叉树的每个结点至多只有2棵子树(不存在度大于2的结点)，二叉树的子树有左右之分，次序不能颠倒。</p>
-<p>二叉树的第i层至多有2(i-1)个结点；深度为k的二叉树至多有2k-1个结点。</p>
-<p>一棵深度为k，且有2^k-1个节点的二叉树称之为<strong> 满二叉树 </strong>；</p>
-<p>深度为k，有n个节点的二叉树，当且仅当其每一个节点都与深度为k的满二叉树中，序号为1至n的节点对应时，称之为<strong> 完全二叉树 </strong>。</p>
-<p><img src="http://7xigvj.com1.z0.glb.clouddn.com/15307212581214.jpg" alt=""></p>
-<ul>
-<li>三种遍历方法</li>
-</ul>
-<p>在二叉树的一些应用中，常常要求在树中查找具有某种特征的节点，或者对树中全部节点进行某种处理，这就涉及到二叉树的遍历。二叉树主要是由3个基本单元组成，根节点、左子树和右子树。如果限定先左后右，那么根据这三个部分遍历的顺序不同，可以分为先序遍历、中序遍历和后续遍历三种。</p>
-<p>(1) 先序遍历 若二叉树为空，则空操作，否则先访问根节点，再先序遍历左子树，最后先序遍历右子树。 (2) 中序遍历 若二叉树为空，则空操作，否则先中序遍历左子树，再访问根节点，最后中序遍历右子树。(3) 后序遍历 若二叉树为空，则空操作，否则先后序遍历左子树访问根节点，再后序遍历右子树，最后访问根节点。</p>
-<p><img src="http://7xigvj.com1.z0.glb.clouddn.com/15307212790800.jpg" alt=""></p>
-<p>给定二叉树写出三种遍历结果</p>
-<ul>
-<li>树和二叉树的区别</li>
-</ul>
-<p>(1) 二叉树每个节点最多有2个子节点，树则无限制。 (2) 二叉树中节点的子树分为左子树和右子树，即使某节点只有一棵子树，也要指明该子树是左子树还是右子树，即二叉树是有序的。 (3) 树决不能为空，它至少有一个节点，而一棵二叉树可以是空的。</p>
-<p>上面我们主要对二叉树的相关概念进行了介绍，下面我们将从二叉查找树开始，介绍二叉树的几种常见类型，同时将之前的理论部分用代码实现出来。</p>
-<blockquote>
-<p>二叉查找树</p>
-</blockquote>
-<ul>
-<li>定义</li>
-</ul>
-<p>二叉查找树就是二叉排序树，也叫二叉搜索树。二叉查找树或者是一棵空树，或者是具有下列性质的二叉树： (1) 若左子树不空，则左子树上所有结点的值均小于它的根结点的值；(2) 若右子树不空，则右子树上所有结点的值均大于它的根结点的值；(3) 左、右子树也分别为二叉排序树；(4) 没有键值相等的结点。</p>
-<p><img src="http://7xigvj.com1.z0.glb.clouddn.com/15307213483050.jpg" alt="典型的二叉查找树的构建过程
-"></p>
-<ul>
-<li>性能分析</li>
-</ul>
-<p>对于二叉查找树来说，当给定值相同但顺序不同时，所构建的二叉查找树形态是不同的，下面看一个例子。</p>
-<p><img src="http://7xigvj.com1.z0.glb.clouddn.com/15307214196777.jpg" alt="不同形态平衡二叉树的ASL不同
-"></p>
-<p>可以看到，含有n个节点的二叉查找树的平均查找长度和树的形态有关。最坏情况下，当先后插入的关键字有序时，构成的二叉查找树蜕变为单支树，树的深度为n，其平均查找长度(n+1)/2(和顺序查找相同），最好的情况是二叉查找树的形态和折半查找的判定树相同，其平均查找长度和log2(n)成正比。平均情况下，二叉查找树的平均查找长度和logn是等数量级的，所以为了获得更好的性能，通常在二叉查找树的构建过程需要进行“平衡化处理”，之后我们将介绍平衡二叉树和红黑树，这些均可以使查找树的高度为O(log(n))。</p>
-<ul>
-<li>代码10 二叉树的节点</li>
-</ul>
-<p>class TreeNode<e> {</e></p>
-<pre><code><span class="keyword">E</span> element;
-TreeNode&lt;<span class="keyword">E</span>&gt; left;
-TreeNode&lt;<span class="keyword">E</span>&gt; right;
-
-public TreeNode(<span class="keyword">E</span> <span class="keyword">e</span>) {
-    element = <span class="keyword">e</span>;
-}
-</code></pre><p>}<br>二叉查找树的三种遍历都可以直接用递归的方法来实现：</p>
-<ul>
-<li>代码12 先序遍历</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">protected void preorder(TreeNode&lt;E&gt; root) &#123;</span><br><span class="line"></span><br><span class="line">    if (root == null)</span><br><span class="line">        return;</span><br><span class="line"></span><br><span class="line">    System.out.println(root.element + &quot; &quot;);</span><br><span class="line"></span><br><span class="line">    preorder(root.left);</span><br><span class="line"></span><br><span class="line">    preorder(root.right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>代码13 中序遍历</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">protected void inorder(TreeNode&lt;E&gt; root) &#123;</span><br><span class="line"></span><br><span class="line">    if (root == null)</span><br><span class="line">        return;</span><br><span class="line"></span><br><span class="line">    inorder(root.left);</span><br><span class="line"></span><br><span class="line">    System.out.println(root.element + &quot; &quot;);</span><br><span class="line"></span><br><span class="line">    inorder(root.right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>代码14 后序遍历</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">protected void postorder(TreeNode&lt;E&gt; root) &#123;</span><br><span class="line"></span><br><span class="line">    if (root == null)</span><br><span class="line">        return;</span><br><span class="line"></span><br><span class="line">    postorder(root.left);</span><br><span class="line"></span><br><span class="line">    postorder(root.right);</span><br><span class="line"></span><br><span class="line">    System.out.println(root.element + &quot; &quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>代码15 二叉查找树的简单实现</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @author JackalTsc</span><br><span class="line"> */</span><br><span class="line">public class MyBinSearchTree&lt;E extends Comparable&lt;E&gt;&gt; &#123;</span><br><span class="line"></span><br><span class="line">    // 根</span><br><span class="line">    private TreeNode&lt;E&gt; root;</span><br><span class="line"></span><br><span class="line">    // 默认构造函数</span><br><span class="line">    public MyBinSearchTree() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 二叉查找树的搜索</span><br><span class="line">    public boolean search(E e) &#123;</span><br><span class="line"></span><br><span class="line">        TreeNode&lt;E&gt; current = root;</span><br><span class="line"></span><br><span class="line">        while (current != null) &#123;</span><br><span class="line"></span><br><span class="line">            if (e.compareTo(current.element) &lt; 0) &#123;</span><br><span class="line">                current = current.left;</span><br><span class="line">            &#125; else if (e.compareTo(current.element) &gt; 0) &#123;</span><br><span class="line">                current = current.right;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 二叉查找树的插入</span><br><span class="line">    public boolean insert(E e) &#123;</span><br><span class="line"></span><br><span class="line">        // 如果之前是空二叉树 插入的元素就作为根节点</span><br><span class="line">        if (root == null) &#123;</span><br><span class="line">            root = createNewNode(e);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            // 否则就从根节点开始遍历 直到找到合适的父节点</span><br><span class="line">            TreeNode&lt;E&gt; parent = null;</span><br><span class="line">            TreeNode&lt;E&gt; current = root;</span><br><span class="line">            while (current != null) &#123;</span><br><span class="line">                if (e.compareTo(current.element) &lt; 0) &#123;</span><br><span class="line">                    parent = current;</span><br><span class="line">                    current = current.left;</span><br><span class="line">                &#125; else if (e.compareTo(current.element) &gt; 0) &#123;</span><br><span class="line">                    parent = current;</span><br><span class="line">                    current = current.right;</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    return false;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            // 插入</span><br><span class="line">            if (e.compareTo(parent.element) &lt; 0) &#123;</span><br><span class="line">                parent.left = createNewNode(e);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                parent.right = createNewNode(e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 创建新的节点</span><br><span class="line">    protected TreeNode&lt;E&gt; createNewNode(E e) &#123;</span><br><span class="line">        return new TreeNode(e);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 二叉树的节点</span><br><span class="line">class TreeNode&lt;E extends Comparable&lt;E&gt;&gt; &#123;</span><br><span class="line"></span><br><span class="line">    E element;</span><br><span class="line">    TreeNode&lt;E&gt; left;</span><br><span class="line">    TreeNode&lt;E&gt; right;</span><br><span class="line"></span><br><span class="line">    public TreeNode(E e) &#123;</span><br><span class="line">        element = e;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面的代码15主要展示了一个自己实现的简单的二叉查找树，其中包括了几个常见的操作，当然更多的操作还是需要大家自己去完成。因为在二叉查找树中删除节点的操作比较复杂，所以下面我详细介绍一下这里。</p>
-<p>二叉查找树中删除节点分析<br>要在二叉查找树中删除一个元素，首先需要定位包含该元素的节点，以及它的父节点。假设current指向二叉查找树中包含该元素的节点，而parent指向current节点的父节点，current节点可能是parent节点的左孩子，也可能是右孩子。这里需要考虑两种情况：</p>
-<p>1、current节点没有左孩子，那么只需要将patent节点和current节点的右孩子相连。<br>2、current节点有一个左孩子，假设rightMost指向包含current节点的左子树中最大元素的节点，而parentOfRightMost指向rightMost节点的父节点。那么先使用rightMost节点中的元素值替换current节点中的元素值，将parentOfRightMost节点和rightMost节点的左孩子相连，然后删除rightMost节点。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">// 二叉搜索树删除节点</span><br><span class="line">public boolean delete(E e) &#123;</span><br><span class="line"></span><br><span class="line">    TreeNode&lt;E&gt; parent = null;</span><br><span class="line">    TreeNode&lt;E&gt; current = root;</span><br><span class="line"></span><br><span class="line">    // 找到要删除的节点的位置</span><br><span class="line">    while (current != null) &#123;</span><br><span class="line">        if (e.compareTo(current.element) &lt; 0) &#123;</span><br><span class="line">            parent = current;</span><br><span class="line">            current = current.left;</span><br><span class="line">        &#125; else if (e.compareTo(current.element) &gt; 0) &#123;</span><br><span class="line">            parent = current;</span><br><span class="line">            current = current.right;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 没找到要删除的节点</span><br><span class="line">    if (current == null) &#123;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 考虑第一种情况</span><br><span class="line">    if (current.left == null) &#123;</span><br><span class="line">        if (parent == null) &#123;</span><br><span class="line">            root = current.right;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            if (e.compareTo(parent.element) &lt; 0) &#123;</span><br><span class="line">                parent.left = current.right;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                parent.right = current.right;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; else &#123; // 考虑第二种情况</span><br><span class="line">        TreeNode&lt;E&gt; parentOfRightMost = current;</span><br><span class="line">        TreeNode&lt;E&gt; rightMost = current.left;</span><br><span class="line">        // 找到左子树中最大的元素节点</span><br><span class="line">        while (rightMost.right != null) &#123;</span><br><span class="line">            parentOfRightMost = rightMost;</span><br><span class="line">            rightMost = rightMost.right;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 替换</span><br><span class="line">        current.element = rightMost.element;</span><br><span class="line"></span><br><span class="line">        // parentOfRightMost和rightMost左孩子相连</span><br><span class="line">        if (parentOfRightMost.right == rightMost) &#123;</span><br><span class="line">            parentOfRightMost.right = rightMost.left;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            parentOfRightMost.left = rightMost.left;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>平衡二叉树</p>
-</blockquote>
-<p>平衡二叉树又称AVL树，它或者是一棵空树，或者是具有下列性质的二叉树：它的左子树和右子树都是平衡二叉树，且左子树和右子树的深度之差的绝对值不超过1。</p>
-<p><img src="http://7xigvj.com1.z0.glb.clouddn.com/15307217090333.jpg" alt="平衡二叉树
-"></p>
-<p>AVL树是最先发明的自平衡二叉查找树算法。在AVL中任何节点的两个儿子子树的高度最大差别为1，所以它也被称为高度平衡树，n个结点的AVL树最大深度约1.44log2n。查找、插入和删除在平均和最坏情况下都是O（log n）。增加和删除可能需要通过一次或多次树旋转来重新平衡这个树。</p>
-<blockquote>
-<p>红黑树</p>
-</blockquote>
-<p>红黑树是平衡二叉树的一种，它保证在最坏情况下基本动态集合操作的事件复杂度为O(log n)。红黑树和平衡二叉树区别如下：(1) 红黑树放弃了追求完全平衡，追求大致平衡，在与平衡二叉树的时间复杂度相差不大的情况下，保证每次插入最多只需要三次旋转就能达到平衡，实现起来也更为简单。(2) 平衡二叉树追求绝对平衡，条件比较苛刻，实现起来比较麻烦，每次插入新节点之后需要旋转的次数不能预知。点击查看更多</p>
-<h2 id="四、图">四、图</h2><ul>
-<li>简介</li>
-</ul>
-<p>图是一种较线性表和树更为复杂的数据结构，在线性表中，数据元素之间仅有线性关系，在树形结构中，数据元素之间有着明显的层次关系，而在图形结构中，节点之间的关系可以是任意的，图中任意两个数据元素之间都可能相关。图的应用相当广泛，特别是近年来的迅速发展，已经渗入到诸如语言学、逻辑学、物理、化学、电讯工程、计算机科学以及数学的其他分支中。</p>
-<ul>
-<li>相关阅读</li>
-</ul>
-<p>因为图这部分的内容还是比较多的，这里就不详细介绍了，有需要的可以自己搜索相关资料。</p>
-<p>(1) 《百度百科对图的介绍》<br>(2) 《数据结构之图（存储结构、遍历）》</p>
-<h2 id="五、总结">五、总结</h2><p>到这里，关于常见的数据结构的整理就结束了，断断续续大概花了两天时间写完，在总结的过程中，通过查阅相关资料，结合书本内容，收获还是很大的，在下一篇博客中将会介绍常用数据结构与算法整理总结（下）之算法篇，欢迎大家关注。</p>
 
           
         
@@ -2496,188 +2851,6 @@ public TreeNode(<span class="keyword">E</span> <span class="keyword">e</span>) {
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://aaron-codes.github.io/2015/04/12/SSH原理与运用（一）/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Aaron OuYang"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/3776267"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Aaron's Blog"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2015/04/12/SSH原理与运用（一）/" class="post-title-link" itemprop="url">SSH原理与运用（一）</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2015-04-12 21:30:32" itemprop="dateCreated datePublished" datetime="2015-04-12T21:30:32+08:00">2015-04-12</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2015-04-22 15:32:55" itemprop="dateModified" datetime="2015-04-22T15:32:55+08:00">2015-04-22</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ssh/" itemprop="url" rel="index"><span itemprop="name">ssh</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="什么是SSH?">什么是SSH?</h1><blockquote>
-<p>简单说，SSH是一种网络协议，用于计算机之间的加密登录。</p>
-</blockquote>
-<p>如果一个用户从本地计算机，使用SSH协议登录另一台远程计算机，我们就可以认为，这种登录是安全的，即使被中途截获，密码也不会泄露。<br>最早的时候，互联网通信都是明文通信，一旦被截获，内容就暴露无疑。1995年，芬兰学者Tatu Ylonen设计了SSH协议，将登录信息全部加密，成为互联网安全的一个基本解决方案，迅速在全世界获得推广，目前已经成为Linux系统的标准配置。<br>需要指出的是，SSH只是一种协议，存在多种实现，既有商业实现，也有开源实现。本文针对的实现是OpenSSH，它是自由软件，应用非常广泛。<br>此外，本文只讨论SSH在Linux Shell中的用法。如果要在Windows系统中使用SSH，会用到另一种软件PuTTY，这需要另文介绍。<br>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2015/04/12/SSH原理与运用（一）/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://aaron-codes.github.io/2015/04/12/SSH原理与运用（二）/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2858,7 +3031,7 @@ public TreeNode(<span class="keyword">E</span> <span class="keyword">e</span>) {
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://aaron-codes.github.io/2015/04/03/hello-world/"/>
+    <link itemprop="mainEntityOfPage" href="http://aaron-codes.github.io/2015/04/12/SSH原理与运用（一）/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Aaron OuYang"/>
@@ -2878,7 +3051,7 @@ public TreeNode(<span class="keyword">E</span> <span class="keyword">e</span>) {
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2015/04/03/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+                <a href="/2015/04/12/SSH原理与运用（一）/" class="post-title-link" itemprop="url">SSH原理与运用（一）</a>
               
             
           </h1>
@@ -2903,7 +3076,7 @@ public TreeNode(<span class="keyword">E</span> <span class="keyword">e</span>) {
                 
               
 
-              <time title="创建时间：2015-04-03 14:04:23" itemprop="dateCreated datePublished" datetime="2015-04-03T14:04:23+08:00">2015-04-03</time>
+              <time title="创建时间：2015-04-12 21:30:32" itemprop="dateCreated datePublished" datetime="2015-04-12T21:30:32+08:00">2015-04-12</time>
             
 
             
@@ -2920,11 +3093,29 @@ public TreeNode(<span class="keyword">E</span> <span class="keyword">e</span>) {
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2015-04-07 14:41:00" itemprop="dateModified" datetime="2015-04-07T14:41:00+08:00">2015-04-07</time>
+                <time title="修改时间：2015-04-22 15:32:55" itemprop="dateModified" datetime="2015-04-22T15:32:55+08:00">2015-04-22</time>
               
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ssh/" itemprop="url" rel="index"><span itemprop="name">ssh</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -2955,18 +3146,19 @@ public TreeNode(<span class="keyword">E</span> <span class="keyword">e</span>) {
 
       
         
+          <h1 id="什么是SSH?">什么是SSH?</h1><blockquote>
+<p>简单说，SSH是一种网络协议，用于计算机之间的加密登录。</p>
+</blockquote>
+<p>如果一个用户从本地计算机，使用SSH协议登录另一台远程计算机，我们就可以认为，这种登录是安全的，即使被中途截获，密码也不会泄露。<br>最早的时候，互联网通信都是明文通信，一旦被截获，内容就暴露无疑。1995年，芬兰学者Tatu Ylonen设计了SSH协议，将登录信息全部加密，成为互联网安全的一个基本解决方案，迅速在全世界获得推广，目前已经成为Linux系统的标准配置。<br>需要指出的是，SSH只是一种协议，存在多种实现，既有商业实现，也有开源实现。本文针对的实现是OpenSSH，它是自由软件，应用非常广泛。<br>此外，本文只讨论SSH在Linux Shell中的用法。如果要在Windows系统中使用SSH，会用到另一种软件PuTTY，这需要另文介绍。<br>
+          <!--noindex-->
           
-            <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
+            <div class="post-button text-center">
+              <a class="btn" href="/2015/04/12/SSH原理与运用（一）/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
           
+          <!--/noindex-->
         
       
     </div>
@@ -3009,6 +3201,10 @@ public TreeNode(<span class="keyword">E</span> <span class="keyword">e</span>) {
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
 
 
           </div>
@@ -3053,7 +3249,7 @@ public TreeNode(<span class="keyword">E</span> <span class="keyword">e</span>) {
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3078,7 +3274,9 @@ public TreeNode(<span class="keyword">E</span> <span class="keyword">e</span>) {
                     
                       
                     
-                    <span class="site-state-item-count">6</span>
+                      
+                    
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">分类</span>
                   
                 </div>
@@ -3129,7 +3327,11 @@ public TreeNode(<span class="keyword">E</span> <span class="keyword">e</span>) {
                     
                       
                     
-                    <span class="site-state-item-count">19</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">标签</span>
                   
                 </div>

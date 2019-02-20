@@ -48,6 +48,36 @@
   </entry>
   
   <entry>
+    <title>微服务 2.0 技术栈选型手册</title>
+    <link href="http://aaron-codes.github.io/2018/07/06/2019-02-20/"/>
+    <id>http://aaron-codes.github.io/2018/07/06/2019-02-20/</id>
+    <published>2018-07-06T06:09:10.000Z</published>
+    <updated>2019-02-20T06:52:43.877Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;[toc]&lt;/p&gt;
+&lt;h1 id=&quot;(转)微服务_2-0_技术栈选型手册&quot;&gt;(转)微服务 2.0 技术栈选型手册&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;原文引自：&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="architecture" scheme="http://aaron-codes.github.io/categories/architecture/"/>
+    
+    
+      <category term="mircoservices" scheme="http://aaron-codes.github.io/tags/mircoservices/"/>
+    
+      <category term="java" scheme="http://aaron-codes.github.io/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Hive 笔试题</title>
     <link href="http://aaron-codes.github.io/2018/07/06/2018-07-09/"/>
     <id>http://aaron-codes.github.io/2018/07/06/2018-07-09/</id>
@@ -77,11 +107,11 @@
   </entry>
   
   <entry>
-    <title>常见数据结构与算法整理总结（下）</title>
-    <link href="http://aaron-codes.github.io/2018/07/05/2018-07-05-1/"/>
-    <id>http://aaron-codes.github.io/2018/07/05/2018-07-05-1/</id>
+    <title>常见数据结构与算法整理总结（上）</title>
+    <link href="http://aaron-codes.github.io/2018/07/05/2018-07-05/"/>
+    <id>http://aaron-codes.github.io/2018/07/05/2018-07-05/</id>
     <published>2018-07-05T08:09:10.000Z</published>
-    <updated>2018-07-05T02:36:42.572Z</updated>
+    <updated>2018-07-05T01:35:50.650Z</updated>
     
     <summary type="html">
     
@@ -89,8 +119,7 @@
       
         
         
-          &lt;p&gt;[toc]&lt;/p&gt;
-&lt;h1 id=&quot;常见数据结构与算法整理总结（下）&quot;&gt;常见数据结构与算法整理总结（下）&lt;/h1&gt;&lt;h2
+          &lt;h1
         
       
     
@@ -106,11 +135,11 @@
   </entry>
   
   <entry>
-    <title>常见数据结构与算法整理总结（上）</title>
-    <link href="http://aaron-codes.github.io/2018/07/05/2018-07-05/"/>
-    <id>http://aaron-codes.github.io/2018/07/05/2018-07-05/</id>
+    <title>常见数据结构与算法整理总结（下）</title>
+    <link href="http://aaron-codes.github.io/2018/07/05/2018-07-05-1/"/>
+    <id>http://aaron-codes.github.io/2018/07/05/2018-07-05-1/</id>
     <published>2018-07-05T08:09:10.000Z</published>
-    <updated>2018-07-05T01:35:50.650Z</updated>
+    <updated>2018-07-05T02:36:42.572Z</updated>
     
     <summary type="html">
     
@@ -118,7 +147,8 @@
       
         
         
-          &lt;h1
+          &lt;p&gt;[toc]&lt;/p&gt;
+&lt;h1 id=&quot;常见数据结构与算法整理总结（下）&quot;&gt;常见数据结构与算法整理总结（下）&lt;/h1&gt;&lt;h2
         
       
     
@@ -221,18 +251,16 @@
   </entry>
   
   <entry>
-    <title>SSH原理与运用（一）</title>
-    <link href="http://aaron-codes.github.io/2015/04/12/SSH%E5%8E%9F%E7%90%86%E4%B8%8E%E8%BF%90%E7%94%A8%EF%BC%88%E4%B8%80%EF%BC%89/"/>
-    <id>http://aaron-codes.github.io/2015/04/12/SSH原理与运用（一）/</id>
+    <title>SSH-远程操作与端口转发（二）</title>
+    <link href="http://aaron-codes.github.io/2015/04/12/SSH%E5%8E%9F%E7%90%86%E4%B8%8E%E8%BF%90%E7%94%A8%EF%BC%88%E4%BA%8C%EF%BC%89/"/>
+    <id>http://aaron-codes.github.io/2015/04/12/SSH原理与运用（二）/</id>
     <published>2015-04-12T13:30:32.000Z</published>
-    <updated>2015-04-22T07:32:55.000Z</updated>
+    <updated>2015-04-22T07:48:57.000Z</updated>
     
     <summary type="html">
     
-      &lt;h1 id=&quot;什么是SSH?&quot;&gt;什么是SSH?&lt;/h1&gt;&lt;blockquote&gt;
-&lt;p&gt;简单说，SSH是一种网络协议，用于计算机之间的加密登录。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;如果一个用户从本地计算机，使用SSH协议登录另一台远程计算机，我们就可以认为，这种登录是安全的，即使被中途截获，密码也不会泄露。&lt;br&gt;最早的时候，互联网通信都是明文通信，一旦被截获，内容就暴露无疑。1995年，芬兰学者Tatu Ylonen设计了SSH协议，将登录信息全部加密，成为互联网安全的一个基本解决方案，迅速在全世界获得推广，目前已经成为Linux系统的标准配置。&lt;br&gt;需要指出的是，SSH只是一种协议，存在多种实现，既有商业实现，也有开源实现。本文针对的实现是OpenSSH，它是自由软件，应用非常广泛。&lt;br&gt;此外，本文只讨论SSH在Linux Shell中的用法。如果要在Windows系统中使用SSH，会用到另一种软件PuTTY，这需要另文介绍。&lt;br&gt;
+      &lt;h1 id=&quot;远程操作&quot;&gt;远程操作&lt;/h1&gt;&lt;p&gt;SSH不仅可以用于远程主机登录，还可以直接在远程主机上执行操作。&lt;br&gt;上一节的操作，就是一个例子：&lt;/p&gt;
+&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;$&lt;/span&gt; ssh user@host &#39;mkdir -p .ssh &amp;amp;&amp;amp; cat &amp;gt;&amp;gt; .ssh/authorized_keys&#39; &amp;lt; ~/.ssh/id_rsa.pub&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
     
@@ -248,16 +276,18 @@
   </entry>
   
   <entry>
-    <title>SSH-远程操作与端口转发（二）</title>
-    <link href="http://aaron-codes.github.io/2015/04/12/SSH%E5%8E%9F%E7%90%86%E4%B8%8E%E8%BF%90%E7%94%A8%EF%BC%88%E4%BA%8C%EF%BC%89/"/>
-    <id>http://aaron-codes.github.io/2015/04/12/SSH原理与运用（二）/</id>
+    <title>SSH原理与运用（一）</title>
+    <link href="http://aaron-codes.github.io/2015/04/12/SSH%E5%8E%9F%E7%90%86%E4%B8%8E%E8%BF%90%E7%94%A8%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+    <id>http://aaron-codes.github.io/2015/04/12/SSH原理与运用（一）/</id>
     <published>2015-04-12T13:30:32.000Z</published>
-    <updated>2015-04-22T07:48:57.000Z</updated>
+    <updated>2015-04-22T07:32:55.000Z</updated>
     
     <summary type="html">
     
-      &lt;h1 id=&quot;远程操作&quot;&gt;远程操作&lt;/h1&gt;&lt;p&gt;SSH不仅可以用于远程主机登录，还可以直接在远程主机上执行操作。&lt;br&gt;上一节的操作，就是一个例子：&lt;/p&gt;
-&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;$&lt;/span&gt; ssh user@host &#39;mkdir -p .ssh &amp;amp;&amp;amp; cat &amp;gt;&amp;gt; .ssh/authorized_keys&#39; &amp;lt; ~/.ssh/id_rsa.pub&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+      &lt;h1 id=&quot;什么是SSH?&quot;&gt;什么是SSH?&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;简单说，SSH是一种网络协议，用于计算机之间的加密登录。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;如果一个用户从本地计算机，使用SSH协议登录另一台远程计算机，我们就可以认为，这种登录是安全的，即使被中途截获，密码也不会泄露。&lt;br&gt;最早的时候，互联网通信都是明文通信，一旦被截获，内容就暴露无疑。1995年，芬兰学者Tatu Ylonen设计了SSH协议，将登录信息全部加密，成为互联网安全的一个基本解决方案，迅速在全世界获得推广，目前已经成为Linux系统的标准配置。&lt;br&gt;需要指出的是，SSH只是一种协议，存在多种实现，既有商业实现，也有开源实现。本文针对的实现是OpenSSH，它是自由软件，应用非常广泛。&lt;br&gt;此外，本文只讨论SSH在Linux Shell中的用法。如果要在Windows系统中使用SSH，会用到另一种软件PuTTY，这需要另文介绍。&lt;br&gt;
     
     </summary>
     
